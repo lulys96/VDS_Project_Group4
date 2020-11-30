@@ -12,12 +12,22 @@
 using namespace ClassProject;
 class ManagerTest : public ::testing::Test {
 protected:
-    Manager *my_manager = NULL;
+    Manager my_manager;
 };
 
 TEST_F(ManagerTest, CtorTableSize) {
-    my_manager = new Manager();
-    ASSERT_TRUE(my_manager->uni_table.size()==2);
+    ASSERT_TRUE(my_manager.uni_table.size()==2);
+}
+
+/* TEST_F(ManagerTest, CtorTableTermNodes) {
+    ASSERT_TRUE(
+    (my_manager.uni_table[0].high == 0) &&
+    (my_manager.uni_table[0].low == 0) &&
+    (my_manager.uni_table[0].top_var == 0));
+    ASSERT_TRUE(
+    (my_manager.uni_table[1].high == 1) &&
+    (my_manager.uni_table[1].low == 1) &&
+    (my_manager.uni_table[1].top_var == 1)); */
 }
 
 

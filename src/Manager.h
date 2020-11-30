@@ -17,7 +17,7 @@
 namespace ClassProject {
 class Manager : public ManagerInterface {
     public:
-    Manager(){}
+    Manager();
 
     BDD_ID createVar(const std::string &label) override {}
 
