@@ -27,8 +27,8 @@ TEST_F(ManagerTest, CtorTableSize) {
     ASSERT_TRUE(
     (my_manager.uni_table[1].high == 1) &&
     (my_manager.uni_table[1].low == 1) &&
-    (my_manager.uni_table[1].top_var == 1)); */
-}
+    (my_manager.uni_table[1].top_var == 1)); 
+} */
 
 
 #endif //VDS_PROJECT_TESTS_H
