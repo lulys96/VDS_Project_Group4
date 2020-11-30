@@ -7,7 +7,18 @@
 
 #include "gtest/gtest.h"
 #include "../Manager.h"
+#include "../ManagerInterface.h"
 
+using namespace ClassProject;
+class ManagerTest : public ::testing::Test{
+protected:
+    ManagerInterface *my_manager = NULL;
+};
+
+TEST_F(ManagerTest, ManagerInitTest) {
+    my_manager = new Manager();
+    ASSERT_TRUE (my_manager != NULL);
+}
 
 #endif //VDS_PROJECT_TESTS_H
 
