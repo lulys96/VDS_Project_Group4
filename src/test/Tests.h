@@ -10,15 +10,16 @@
 #include "../ManagerInterface.h"
 
 using namespace ClassProject;
-class ManagerTest : public ::testing::Test{
+class ManagerTest : public ::testing::Test {
 protected:
-    ManagerInterface *my_manager = NULL;
+    Manager *my_manager = NULL;
 };
 
-TEST_F(ManagerTest, ManagerInitTest) {
+TEST_F(ManagerTest, CtorTableSize) {
     my_manager = new Manager();
-    ASSERT_TRUE (my_manager != NULL);
+    ASSERT_TRUE(my_manager->uni_table.size()==2);
 }
+
 
 #endif //VDS_PROJECT_TESTS_H
 

@@ -60,6 +60,15 @@ class Manager : public ManagerInterface {
     void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override {}
 
 	size_t uniqueTableSize() override {};
+
+
+    struct TableEntry {
+        BDD_ID high;
+        BDD_ID low;
+        BDD_ID top_var;
+    };
+
+    std::vector<TableEntry> uni_table;
 };
 }
 #endif
