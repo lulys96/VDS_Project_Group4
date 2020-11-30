@@ -23,9 +23,9 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build ${{runner.workspace}}/libs/googletest/build
       
     - name: Googletest installer
-    # You may pin to the exact commit or the version.
-    # uses: MarkusJx/googletest-installer@2dbed3d0a9dc19bebe3e36773185ab9c17664c8d
-    uses: MarkusJx/googletest-installer@v1.1
+      # You may pin to the exact commit or the version.
+      # uses: MarkusJx/googletest-installer@2dbed3d0a9dc19bebe3e36773185ab9c17664c8d
+      uses: MarkusJx/googletest-installer@v1.1
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
