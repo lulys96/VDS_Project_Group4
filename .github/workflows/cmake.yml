@@ -22,11 +22,10 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{runner.workspace}}/build ${{runner.workspace}}/libs/googletest/build
       
-    - name: install gtest
-      #clone, build and install gtest
-      shell: bash
-      working-directory: ${{runner.workspace}}/libs/googletest/build
-      run: cmake ../ && make && make install
+   - name: Googletest installer
+    # You may pin to the exact commit or the version.
+    # uses: MarkusJx/googletest-installer@2dbed3d0a9dc19bebe3e36773185ab9c17664c8d
+    uses: MarkusJx/googletest-installer@v1.1
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
