@@ -24,6 +24,14 @@ TEST_F(ManagerTest, CtorTableTermNodes) {
     ASSERT_TRUE(my_manager.False()==0); 
 } 
 
+// TEST_F(ManagerTest, ite) {
+//     //ite(f,g,h) - if f, then g, else h
+//     ASSERT_FALSE(my_manager.ite(1,0,1));
+//     ASSERT_TRUE(my_manager.ite(0,0,1)); 
+
+//     ASSERT_TRUE(my_manager.ite(1,1,0));
+//     ASSERT_FALSE(my_manager.ite(0,1,0));
+// }
 
 #endif //VDS_PROJECT_TESTS_H
 

@@ -21,7 +21,7 @@ class Manager : public ManagerInterface {
     public:
     Manager();
 
-    BDD_ID createVar(const std::string &label) override {}
+    BDD_ID createVar(const std::string &label) override {};
 
     const BDD_ID &True() override;
 
@@ -33,7 +33,7 @@ class Manager : public ManagerInterface {
 
     BDD_ID topVar(const BDD_ID f) override {}
 
-    BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e) override {}
+    BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e) override;
 
     BDD_ID coFactorTrue(const BDD_ID f, BDD_ID x) override {}
 

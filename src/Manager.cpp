@@ -8,13 +8,13 @@
 using namespace ClassProject; 
 Manager::Manager()
 {
-    // uni_table.resize(2);
-    // uni_table[0].label="0";
-    // uni_table[1].id=1;
-    // uni_table[1].high=1;
-    // uni_table[1].low=1;
-    // uni_table[1].top_var=1;
-    // uni_table[1].label="1";
+    uni_table.resize(2);
+    uni_table[0].label="0";
+    uni_table[1].id=1;
+    uni_table[1].high=1;
+    uni_table[1].low=1;
+    uni_table[1].top_var=1;
+    uni_table[1].label="1";
 }
 const BDD_ID &Manager::True()
 {
@@ -39,4 +39,9 @@ const BDD_ID &Manager::False()
 size_t Manager::uniqueTableSize()
 {
     return uni_table.size();
+}
+
+BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
+{
+    
 }
