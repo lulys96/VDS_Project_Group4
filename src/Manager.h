@@ -12,8 +12,10 @@
 #include <unordered_map>
 #include <set>
 #include <string>
+#include <stdexcept>
 #include "ManagerInterface.h"
 
+class ManagerTest;
 namespace ClassProject {
 class Manager : public ManagerInterface {
     public:
@@ -21,9 +23,9 @@ class Manager : public ManagerInterface {
 
     BDD_ID createVar(const std::string &label) override {}
 
-    const BDD_ID &True() override {}
+    const BDD_ID &True() override;
 
-    const BDD_ID &False() override {}
+    const BDD_ID &False() override;
 
     bool isConstant(const BDD_ID f) override {}
 
@@ -59,13 +61,15 @@ class Manager : public ManagerInterface {
 
     void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override {}
 
-	size_t uniqueTableSize() override {};
+	size_t uniqueTableSize() override;
 
-
+    private:
     struct TableEntry {
+        BDD_ID id;
         BDD_ID high;
         BDD_ID low;
         BDD_ID top_var;
+        std::string label;
     };
 
     std::vector<TableEntry> uni_table;
