@@ -43,5 +43,6 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
-    
+    if (i) return t;
+    else return e;
 }
