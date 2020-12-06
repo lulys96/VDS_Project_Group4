@@ -63,3 +63,15 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
     nodes_of_root.insert(uni_table[root].high);
     nodes_of_root.insert(uni_table[root].low);
 }
+
+BDD_ID Manager::createVar(const std::string &label)
+{
+    TableEntry new_var = TableEntry();
+    new_var.label = label;
+    new_var.high = 1;
+    new_var.low = 0;
+    new_var.id = uniqueTableSize();
+    new_var.top_var = new_var.id;
+    uni_table.push_back(new_var);
+    return new_var.id;
+}

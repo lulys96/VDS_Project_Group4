@@ -21,7 +21,7 @@ class Manager : public ManagerInterface {
     public:
     Manager();
 
-    BDD_ID createVar(const std::string &label) override {};
+    BDD_ID createVar(const std::string &label) override;
 
     const BDD_ID &True() override;
 
