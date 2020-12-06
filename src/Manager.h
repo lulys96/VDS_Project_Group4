@@ -31,7 +31,7 @@ class Manager : public ManagerInterface {
 
     bool isVariable(const BDD_ID x) override {}
 
-    BDD_ID topVar(const BDD_ID f) override {}
+    BDD_ID topVar(const BDD_ID f) override;
 
     BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e) override;
 
@@ -55,9 +55,9 @@ class Manager : public ManagerInterface {
 
     BDD_ID nor2(const BDD_ID a, const BDD_ID b) override {}
 
-    std::string getTopVarName(const BDD_ID &root) override {}
+    std::string getTopVarName(const BDD_ID &root) override;
 
-    void findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) override {}
+    void findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) override;
 
     void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override {}
 

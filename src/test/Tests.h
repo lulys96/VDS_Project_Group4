@@ -33,5 +33,22 @@ TEST_F(ManagerTest, ite) {
     ASSERT_FALSE(my_manager.ite(0,1,0));
 }
 
+TEST_F(ManagerTest, createVar) {
+//NEXT_ID_ava(id) - "x1"(label) - NEXT_ID_ava(TopVar) - 1(high) - 0(low)
+    my_manager.createVar("x1");
+    ASSERT_TRUE(my_manager.uniqueTableSize()==3);
+    ASSERT_TRUE(my_manager.getTopVarName(2)=="x1");
+    std::set<BDD_ID> nodes;
+    my_manager.findNodes(2,nodes);
+    const bool is_in = (nodes.find(0) != nodes.end()) &
+                       (nodes.find(1) != nodes.end()) &
+                       (nodes.find(2) != nodes.end());
+    ASSERT_TRUE(is_in);
+    ASSERT_TRUE(my_manager.topVar(2)==2);
+}
+
+
+  
+
 #endif //VDS_PROJECT_TESTS_H
 

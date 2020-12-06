@@ -46,3 +46,20 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
     if (i) return t;
     else return e;
 }
+
+std::string Manager::getTopVarName(const BDD_ID &root)
+{
+    return uni_table[root].label;
+}
+
+BDD_ID Manager::topVar(const BDD_ID f) 
+{
+    return uni_table[f].top_var;
+}
+
+void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
+{
+    nodes_of_root.insert(uni_table[root].id);
+    nodes_of_root.insert(uni_table[root].high);
+    nodes_of_root.insert(uni_table[root].low);
+}
