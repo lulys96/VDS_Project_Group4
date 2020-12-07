@@ -24,14 +24,6 @@ TEST_F(ManagerTest, CtorTableTermNodes) {
     ASSERT_TRUE(my_manager.False()==0); 
 } 
 
-// TEST_F(ManagerTest, ite) {
-//     ASSERT_FALSE(my_manager.ite(1,0,1));
-//     ASSERT_TRUE(my_manager.ite(0,0,1)); 
-
-//     ASSERT_TRUE(my_manager.ite(1,1,0));
-//     ASSERT_FALSE(my_manager.ite(0,1,0));
-// }
-
 TEST_F(ManagerTest, createVar) {
 //NEXT_ID_ava(id) - "x1"(label) - NEXT_ID_ava(TopVar) - 1(high) - 0(low)
     my_manager.createVar("x1");

@@ -44,18 +44,19 @@ size_t Manager::uniqueTableSize()
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
     TableEntry new_node = TableEntry();
-    new_node.label = label;
+    new_node.label = ""; //no label yet
     new_node.high = t;
     new_node.low = e;
     new_node.id = uniqueTableSize();
     new_node.top_var = i;
-    uni_table.push_back(new_var);
-    return new_var.id;
+    uni_table.push_back(new_node);
+    return new_node.id;
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root)
 {
-    return uni_table[root].label;
+    BDD_ID topVar_ID = topVar(root);
+    return uni_table[topVar_ID].label;
 }
 
 BDD_ID Manager::topVar(const BDD_ID f) 
@@ -72,11 +73,15 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 
 BDD_ID Manager::createVar(const std::string &label)
 {
-    BDD_ID varID = uniqueTableSize();
-    return ite(varID,1,0);
+    // BDD_ID varID = uniqueTableSize();
+    // BDD_ID newID = ite(varID,1,0);
+    // uni_table[newID].label = label;
+    // return newID;
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {
-    return ite(a,b,0);
+    // BDD_ID newID = ite(a,b,0);
+    // uni_table[newID].label = "and";
+    // return newID;
 }
