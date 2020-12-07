@@ -73,15 +73,15 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 
 BDD_ID Manager::createVar(const std::string &label)
 {
-    // BDD_ID varID = uniqueTableSize();
-    // BDD_ID newID = ite(varID,1,0);
-    // uni_table[newID].label = label;
-    // return newID;
+    BDD_ID varID = uniqueTableSize();
+    BDD_ID newID = ite(varID,1,0);
+    uni_table[newID].label = label;
+    return newID;
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {
-    // BDD_ID newID = ite(a,b,0);
-    // uni_table[newID].label = "and";
-    // return newID;
+    BDD_ID newID = ite(a,b,0);
+    uni_table[newID].label = "and";
+    return newID;
 }
