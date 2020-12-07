@@ -75,3 +75,8 @@ BDD_ID Manager::createVar(const std::string &label)
     uni_table.push_back(new_var);
     return new_var.id;
 }
+
+BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
+{
+
+}
