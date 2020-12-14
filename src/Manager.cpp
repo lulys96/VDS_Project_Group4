@@ -50,6 +50,11 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
+    for (auto& it : uni_table) {
+        if ((it.top_var == i) && (it.high == t) && (it.low == e) ) {
+            return it.id;
+        }
+    }
     TableEntry new_node = TableEntry();
     new_node.label = ""; //no label yet
     new_node.high = t;
@@ -128,7 +133,6 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {
-    BDD_ID newID = ite(a,b,0);
-    uni_table[newID].label = "and";
-    return newID;
+//    BDD_ID newID = ite(a,b,0);
+//    return newID;
 }

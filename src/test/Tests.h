@@ -131,10 +131,10 @@ TEST_F(ManagerTest, and2_terminals)
     ASSERT_TRUE(is_in3);
     ASSERT_TRUE(is_in4);
 
-    ASSERT_TRUE(andID1==2);
-    ASSERT_TRUE(andID2==3);
-    ASSERT_TRUE(andID3==4);
-    ASSERT_TRUE(andID4==5);
+    ASSERT_TRUE(andID1==0); //equal to terminal node zero 
+    ASSERT_TRUE(andID2==2);
+    ASSERT_TRUE(andID3==3);
+    ASSERT_TRUE(andID4==4);
 }
 
 TEST_F(ManagerTest, and2)
