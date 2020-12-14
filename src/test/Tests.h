@@ -29,7 +29,9 @@ TEST_F(ManagerTest, CtorTableTermNodes) {
 TEST_F(ManagerTest, CoFactorFalse)
 {
     BDD_ID f;
-    ASSERT_TRUE(my_manager.coFactorFalse(f));
+    ASSERT_NO_THROW(my_manager.coFactorFalse(f))<<"No existing entry for variable!!!";
+    my_manager.createVar("x1");
+ //   ASSERT_TRUE(my_manager.coFactorFalse(f))
 }
 
 TEST_F(ManagerTest, CoFactorPositiv)
