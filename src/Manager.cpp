@@ -33,10 +33,10 @@ bool Manager::isConstant(const BDD_ID f)
 
 bool Manager::isVariable(const BDD_ID x)
 {
-    // if(uni_table[x].low == False() && uni_table[x].high  == True() 
-    //                                && uni_table[x].top_var  == x)
-    //     return true;
-    // else return false;
+    if(uni_table[x].low == False() && uni_table[x].high  == True() 
+                                   && uni_table[x].top_var  == x)
+        return true;
+    else return false;
 }
 const BDD_ID &Manager::True()
 {
