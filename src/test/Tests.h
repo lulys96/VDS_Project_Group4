@@ -31,7 +31,7 @@ TEST_F(ManagerTest, isVariable)
 {
     ASSERT_EQ(my_manager.isVariable(0), false);
     ASSERT_EQ(my_manager.isVariable(1), false);
-    // ASSERT_EQ(my_manager.isVariable(2), true);
+    ASSERT_EQ(my_manager.isVariable(2), true);
 } 
 
 TEST_F(ManagerTest, CtorTableTermNodes) 
