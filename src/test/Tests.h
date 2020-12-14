@@ -27,12 +27,14 @@ TEST_F(ManagerTest, isConstant)
     ASSERT_EQ(my_manager.isConstant(2), false);
 }
 
-// TEST_F(ManagerTest, isVariable)
-// {
-//     ASSERT_EQ(my_manager.isVariable(0), false);
-//     ASSERT_EQ(my_manager.isVariable(1), false);
-//     ASSERT_EQ(my_manager.isVariable(2), true);
-// } 
+TEST_F(ManagerTest, isVariable)
+{
+    ASSERT_EQ(my_manager.isVariable(0), false);
+    ASSERT_EQ(my_manager.isVariable(1), false);
+    ASSERT_EQ(my_manager.isVariable(my_manager.createVar("x1")), true);
+    ASSERT_EQ(my_manager.isVariable(my_manager.createVar("x2")), true);
+    ASSERT_EQ(my_manager.isVariable(my_manager.and2(2,3)), false); //and node is not a var
+} 
 
 TEST_F(ManagerTest, CtorTableTermNodes) 
 {
