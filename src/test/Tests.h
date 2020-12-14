@@ -136,12 +136,15 @@ TEST_F(ManagerTest, or2_var)
     BDD_ID orID3 = my_manager.or2(idA,0);
     BDD_ID orID4 = my_manager.or2(idA,1);
     BDD_ID orID5 = my_manager.or2(idA,idA);
+    BDD_ID orID6 = my_manager.or2(idA,idB);
 
-    ASSERT_TRUE(orID1 == idA);
-    ASSERT_TRUE(orID2 == 1);
-    ASSERT_TRUE(orID3 == idA);
-    ASSERT_TRUE(orID4 == 1);
+
+    ASSERT_EQ(orID1, idA);
+    ASSERT_EQ(orID2, 1);
+    ASSERT_EQ(orID3, idA);
+    ASSERT_EQ(orID4, 1);
     ASSERT_EQ(orID5, idA);
+    ASSERT_EQ(orID6, 4);
 
 
 
