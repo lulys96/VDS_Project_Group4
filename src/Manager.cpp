@@ -33,7 +33,7 @@ bool Manager::isConstant(const BDD_ID f)
 
 bool Manager::isVariable(const BDD_ID x)
 {
-    //return false;
+    return false;
 }
 const BDD_ID &Manager::True()
 {
