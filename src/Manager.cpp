@@ -26,17 +26,17 @@ Manager::Manager()
 
 bool Manager::isConstant(const BDD_ID f)
 {
-    if(f == False() || f == True())
-        return true;
-    else return false;
+    // if(f == False() || f == True())
+    //     return true;
+    // else return false;
 }
 
-bool Manager::isVariable(const BDD_ID x)
-{
-    if(x == False() || x == True())
-        return false;
-    else return true;
-}
+// bool Manager::isVariable(const BDD_ID x)
+// {
+//     if(x == False() || x == True())
+//         return false;
+//     else return true;
+// }
 const BDD_ID &Manager::True()
 {
     if ((uni_table[1].high == 1) &&
