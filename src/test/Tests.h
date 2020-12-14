@@ -20,11 +20,26 @@ TEST_F(ManagerTest, CtorTableSize) {
 }
 
 TEST_F(ManagerTest, CtorTableTermNodes) {
+    EXPECT_NO_THROW(my_manager.True());
     ASSERT_TRUE(my_manager.True()==1);
+    EXPECT_NO_THROW(my_manager.False());
     ASSERT_TRUE(my_manager.False()==0); 
 } 
 
-TEST_F(ManagerTest, createVar) {
+TEST_F(ManagerTest, CoFactorFalse)
+{
+    BDD_ID f;
+    ASSERT_TRUE(my_manager.coFactorFalse(f));
+}
+
+TEST_F(ManagerTest, CoFactorPositiv)
+{
+
+
+}
+
+TEST_F(ManagerTest, createVar) 
+{
 //NEXT_ID_ava(id) - "x1"(label) - NEXT_ID_ava(TopVar) - 1(high) - 0(low)
     my_manager.createVar("x1");
     ASSERT_TRUE(my_manager.uniqueTableSize()==3);

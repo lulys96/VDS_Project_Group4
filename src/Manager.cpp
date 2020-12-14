@@ -8,8 +8,15 @@
 using namespace ClassProject; 
 Manager::Manager()
 {
-    uni_table.resize(2);
+    //TableEntry new_node = TableEntry();
+    uni_table.push_back(TableEntry()); //use push_back function
+    uni_table[0].id=0;
+    uni_table[0].high=0;
+    uni_table[0].low=0;
+    uni_table[0].top_var=0;
     uni_table[0].label="0";
+
+    uni_table.push_back(TableEntry());
     uni_table[1].id=1;
     uni_table[1].high=1;
     uni_table[1].low=1;
@@ -77,6 +84,18 @@ BDD_ID Manager::createVar(const std::string &label)
     BDD_ID newID = ite(varID,1,0);
     uni_table[newID].label = label;
     return newID;
+}
+
+BDD_ID Manager::coFactorTrue(const BDD_ID f)
+{
+
+
+}
+
+BDD_ID Manager::coFactorFalse(const BDD_ID f)
+{
+
+
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
