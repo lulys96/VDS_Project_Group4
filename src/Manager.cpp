@@ -80,6 +80,10 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 
 BDD_ID Manager::createVar(const std::string &label)
 {
+    for (auto& it : uni_table) {
+        if (it.label == label) return it.id;
+    }
+    
     BDD_ID varID = uniqueTableSize();
     BDD_ID newID = ite(varID,1,0);
     uni_table[newID].label = label;
