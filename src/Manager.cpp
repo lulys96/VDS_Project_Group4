@@ -33,9 +33,10 @@ bool Manager::isConstant(const BDD_ID f)
 
 bool Manager::isVariable(const BDD_ID x)
 {
-    if(x == False() || x == True())//if terminal node return false
-        return false;
-    else return true; //todo: check if node is a variable not boolean function
+    // if(uni_table[x].low == False() && uni_table[x].high  == True() 
+    //                                && uni_table[x].top_var  == x)
+    //     return true;
+    // else return false;
 }
 const BDD_ID &Manager::True()
 {
@@ -144,9 +145,16 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
-{
+{   
+    //topVar is terminal node
+    if (isConstant(a)) {
+        if (a==0) return a;
+        else return b;
+    }
+    else {
     BDD_ID newID = ite(a,b,0);
     return newID;
+    }
 }
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
