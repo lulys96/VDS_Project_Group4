@@ -27,9 +27,9 @@ class Manager : public ManagerInterface {
 
     const BDD_ID &False() override;
 
-    bool isConstant(const BDD_ID f) override {}
+    bool isConstant(const BDD_ID f) override;
 
-    bool isVariable(const BDD_ID x) override {}
+    bool isVariable(const BDD_ID x) override;
 
     BDD_ID topVar(const BDD_ID f) override;
 

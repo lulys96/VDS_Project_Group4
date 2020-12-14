@@ -15,11 +15,27 @@ protected:
     Manager my_manager;
 };
 
-TEST_F(ManagerTest, CtorTableSize) {
+TEST_F(ManagerTest, CtorTableSize) 
+{
     ASSERT_TRUE(my_manager.uniqueTableSize()==2);
 }
 
-TEST_F(ManagerTest, CtorTableTermNodes) {
+TEST_F(ManagerTest, isConstant) 
+{
+    ASSERT_EQ(my_manager.isConstant(0), true);
+    ASSERT_EQ(my_manager.isConstant(1), true);
+    // ASSERT_EQ(my_manager.isConstant(2), false);
+}
+
+// TEST_F(ManagerTest, isVariable)
+// {
+//     ASSERT_EQ(my_manager.isVariable(0), false);
+//     ASSERT_EQ(my_manager.isVariable(1), false);
+//     ASSERT_EQ(my_manager.isVariable(2), true);
+// } 
+
+TEST_F(ManagerTest, CtorTableTermNodes) 
+{
     EXPECT_NO_THROW(my_manager.True());
     ASSERT_TRUE(my_manager.True()==1);
     EXPECT_NO_THROW(my_manager.False());
