@@ -160,5 +160,9 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
         if(b == True()) //if or2(0,1)
             return 1;
         else
-            return 0; //if or2(0,0)
+            if(b == False()) 
+                return 0; //if or2(0,0)
+            else    //if or2(0,a)
+                return b;
+            
 }
