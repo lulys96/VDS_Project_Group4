@@ -180,6 +180,35 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
     }
 }
 
+BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
+{
+if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
+        return f;
+if(topVar(f) == x)
+    return uni_table[f].high;
+else
+    {
+    BDD_ID    T = coFactorTrue(uni_table[f].high, x);
+    BDD_ID    F = coFactorTrue(uni_table[f].low, x);
+    return ite(uni_table[f].top_var, T, F);
+    }
+}
+
+BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
+{
+if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
+        return f;
+if(topVar(f) == x)
+    return uni_table[f].low;
+else
+    {
+    BDD_ID    T = coFactorFalse(uni_table[f].high, x);
+    BDD_ID    F = coFactorFalse(uni_table[f].low, x);
+    return ite(uni_table[f].top_var, T, F);
+    }
+}
+
+
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {   
     //topVar is terminal node
@@ -195,22 +224,19 @@ BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 {
-    if(a == True()) 
-        if (b == True()) //if or2(1,1)
+    if(isConstant(a))
+        if(a == 1) 
             return 1;
-        else
-            return 1; //if or2(1,0)
-    else
-        if(a == False())
-            if(b == True()) //if or2(0,1)
+        else 
+            return b;
+    else if(isConstant(b))
+            if(b == 1)
                 return 1;
             else
-                if(b == False()) 
-                    return 0; //if or2(0,0)
-                else    //if or2(0,a)
-                    return b;
-        else
-            return a; //if or2(a,0)
-            
+                return a;
+    else if(a == b)
+        return a;
+    else
+        return ite(a,1,b);          
 }
 
