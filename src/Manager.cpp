@@ -31,6 +31,10 @@ bool Manager::isConstant(const BDD_ID f)
     else false;
 }
 
+bool Manager::isVariable(const BDD_ID x)
+{
+    //return false;
+}
 const BDD_ID &Manager::True()
 {
     if ((uni_table[1].high == 1) &&
