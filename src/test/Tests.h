@@ -27,6 +27,7 @@ TEST_F(ManagerTest, CtorTableTermNodes) {
 TEST_F(ManagerTest, createVar) {
 //NEXT_ID_ava(id) - "x1"(label) - NEXT_ID_ava(TopVar) - 1(high) - 0(low)
     my_manager.createVar("x1");
+    my_manager.createVar("x1"); // try to create an already existing var
     ASSERT_TRUE(my_manager.uniqueTableSize()==3);
     ASSERT_TRUE(my_manager.getTopVarName(2)=="x1");
     std::set<BDD_ID> nodes;
@@ -36,6 +37,7 @@ TEST_F(ManagerTest, createVar) {
                        (nodes.find(2) != nodes.end());
     ASSERT_TRUE(is_in);
     ASSERT_TRUE(my_manager.topVar(2)==2);
+
 }
 
 TEST_F(ManagerTest, and2)
