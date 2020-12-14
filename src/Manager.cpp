@@ -159,25 +159,15 @@ BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 {
-
-    if(a == True()) 
-        if (b == True()) //if or2(1,1)
-            return 1;
-        else
-            return 1; //if or2(1,0)
-    else
-        if(a == False())
-            if(b == True()) //if or2(0,1)
+    if(isConstant(a))
+        if(a == 1) return 1;
+        else return b;
+    else if(isConstant(b))
+            if(b == 1) //if or2(0,1)
                 return 1;
             else
-                if(b == False()) 
-                    return 0; //if or2(0,0)
-                else    //if or2(0,a)
-                    return b;
-        else
-            if(b == False())
-                return a; //if or2(a,0)
-            else
-                return 1;           
+                return a;
+   // else return a;
+       
             
 }

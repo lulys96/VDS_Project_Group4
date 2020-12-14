@@ -141,7 +141,7 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_TRUE(orID2 == 1);
     ASSERT_TRUE(orID3 == idA);
     ASSERT_TRUE(orID4 == 1);
-    //ASSERT_TRUE(orID5 == idA);
+    ASSERT_EQ(orID5, idA);
 
 
 
