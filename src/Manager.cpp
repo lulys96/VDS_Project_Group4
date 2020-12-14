@@ -26,10 +26,9 @@ Manager::Manager()
 
 bool Manager::isConstant(const BDD_ID f)
 {
-    // if(f == False() || f == True())
-    //     return true;
-    // else 
-    return true;
+    if(f == False() || f == True())
+        return true;
+    else return false;
 }
 
 bool Manager::isVariable(const BDD_ID x)
