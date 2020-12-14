@@ -35,7 +35,8 @@ bool Manager::isVariable(const BDD_ID x)
 {
     // if(x == False() || x == True())
     //     return false;
-    // else return true;
+    // else 
+    return false;
 }
 const BDD_ID &Manager::True()
 {
