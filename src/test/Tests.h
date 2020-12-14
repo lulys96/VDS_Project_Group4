@@ -15,11 +15,18 @@ protected:
     Manager my_manager;
 };
 
-TEST_F(ManagerTest, CtorTableSize) {
+TEST_F(ManagerTest, CtorTableSize) 
+{
     ASSERT_TRUE(my_manager.uniqueTableSize()==2);
 }
 
-TEST_F(ManagerTest, CtorTableTermNodes) {
+TEST_F(ManagerTest, isConstant) 
+{
+    ASSERT_TRUE(my_manager.isConstant(0));
+}
+
+TEST_F(ManagerTest, CtorTableTermNodes) 
+{
     EXPECT_NO_THROW(my_manager.True());
     ASSERT_TRUE(my_manager.True()==1);
     EXPECT_NO_THROW(my_manager.False());

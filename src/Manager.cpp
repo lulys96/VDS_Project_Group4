@@ -23,6 +23,12 @@ Manager::Manager()
     uni_table[1].top_var=1;
     uni_table[1].label="1";
 }
+
+bool Manager::isConstant(const BDD_ID f)
+{
+
+}
+
 const BDD_ID &Manager::True()
 {
     if ((uni_table[1].high == 1) &&
