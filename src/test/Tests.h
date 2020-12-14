@@ -99,24 +99,26 @@ TEST_F(ManagerTest, findNodes)
     ASSERT_TRUE(is_in);
     ASSERT_FALSE(not_in);
 }
-/*
-// TEST_F(ManagerTest, and2)
-// {   
-//     BDD_ID idA = my_manager.createVar("a");
-//     BDD_ID idB = my_manager.createVar("b");
-//     BDD_ID andID = my_manager.and2(idA,idB);
-//     std::set<BDD_ID> nodes;
-//     my_manager.findNodes(andID,nodes);
-//     const bool is_in = (nodes.find(4) != nodes.end()) &
-//                        (nodes.find(0) != nodes.end()) &
-//                        (nodes.find(3) != nodes.end());
+
+TEST_F(ManagerTest, and2)
+{   
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID andID = my_manager.and2(idA,idB);
+    BDD_ID andID2 = my_manager.and2(idA,idB);
+    std::set<BDD_ID> nodes;
+    my_manager.findNodes(andID,nodes);
+    const bool is_in = (nodes.find(andID) != nodes.end()) &
+                       (nodes.find(0) != nodes.end()) &
+                       (nodes.find(idB) != nodes.end());
     
-//     ASSERT_TRUE(andID==4);
-//     ASSERT_TRUE(my_manager.getTopVarName(andID)=="a");
-//     ASSERT_TRUE(my_manager.topVar(andID)==2);
-//     ASSERT_TRUE(is_in);
-// }
-*/  
+    ASSERT_TRUE(andID==4);
+    ASSERT_TRUE(andID2==4);
+    ASSERT_TRUE(my_manager.getTopVarName(andID)=="a");
+    ASSERT_TRUE(my_manager.topVar(andID)==2);
+    ASSERT_TRUE(is_in);
+}
+
 
 #endif //VDS_PROJECT_TESTS_H
 
