@@ -35,9 +35,9 @@ class Manager : public ManagerInterface {
 
     BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e) override;
 
-    BDD_ID coFactorTrue(const BDD_ID f, BDD_ID x) override {}
+    BDD_ID coFactorTrue(const BDD_ID f, BDD_ID x) override;
 
-    BDD_ID coFactorFalse(const BDD_ID f, BDD_ID x) override {}
+    BDD_ID coFactorFalse(const BDD_ID f, BDD_ID x) override;
 
     BDD_ID coFactorTrue(const BDD_ID f) override;
 

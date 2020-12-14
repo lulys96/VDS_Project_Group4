@@ -44,7 +44,7 @@ TEST_F(ManagerTest, CtorTableTermNodes)
     ASSERT_TRUE(my_manager.False()==0); 
 } 
 
-TEST_F(ManagerTest, CoFactorFalse)
+TEST_F(ManagerTest, coFactorFalse)
 {
     BDD_ID f;
     ASSERT_NO_THROW(my_manager.coFactorFalse(f))<<"No existing entry for variable!!!";
@@ -55,7 +55,7 @@ TEST_F(ManagerTest, CoFactorFalse)
     ASSERT_TRUE(my_manager.coFactorFalse(f)==0);
 }
 
-TEST_F(ManagerTest, CoFactorPositiv)
+TEST_F(ManagerTest, coFactorPositiv)
 {
     BDD_ID f;
     ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for variable!!!";
@@ -66,6 +66,14 @@ TEST_F(ManagerTest, CoFactorPositiv)
     ASSERT_TRUE(my_manager.coFactorTrue(f)==1);
 
  }
+
+TEST_F(ManagerTest, coFactorPositiv2)
+{
+    BDD_ID f;
+    ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for given ID!!!";
+
+}
+
 
 TEST_F(ManagerTest, createVar) 
 {
@@ -137,6 +145,8 @@ TEST_F(ManagerTest, or2_var)
     BDD_ID orID4 = my_manager.or2(idA,1);
     BDD_ID orID5 = my_manager.or2(idA,idA);
     BDD_ID orID6 = my_manager.or2(idA,idB);
+    BDD_ID orID7 = my_manager.or2(idB,idA);
+
 
 
     ASSERT_EQ(orID1, idA);
@@ -145,11 +155,14 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_EQ(orID4, 1);
     ASSERT_EQ(orID5, idA);
     ASSERT_EQ(orID6, 4);
+  //  ASSERT_EQ(orID7, 4);
 
 
 
 
 }
+
+
 TEST_F(ManagerTest, and2_terminals)
 {   
     BDD_ID andID1 = my_manager.and2(0,0);
