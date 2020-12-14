@@ -41,13 +41,13 @@ TEST_F(ManagerTest, CoFactorPositiv)
 {
     BDD_ID f;
     ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for variable!!!";
-    //ASSERT_FALSE(my_manager.coFactorTrue(0));
-    //ASSERT_TRUE(my_manager.coFactorTrue(1));
+    ASSERT_FALSE(my_manager.coFactorTrue(0));
+    ASSERT_TRUE(my_manager.coFactorTrue(1));
 
     //f = my_manager.createVar("x1");
     //ASSERT_TRUE(my_manager.coFactorTrue(f)==1);
 
-// }
+ }
 
 TEST_F(ManagerTest, createVar) 
 {
