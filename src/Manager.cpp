@@ -26,7 +26,7 @@ Manager::Manager()
 
 bool Manager::isConstant(const BDD_ID f)
 {
-    if(f == False() || f == True())
+    if(f == False() || f == True()) //if terminal node return true
         return true;
     else return false;
 }
@@ -142,7 +142,6 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
         else
             std::out_of_range("No existing entry for variable!!!");
     }
-
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
@@ -156,4 +155,22 @@ BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
     BDD_ID newID = ite(a,b,0);
     return newID;
     }
+}
+
+BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
+{
+    if(a == True()) 
+        if (b == True()) //if or2(1,1)
+            return 1;
+        else
+            return 1; //if or2(1,0)
+    else
+        if(b == True()) //if or2(0,1)
+            return 1;
+        else
+            if(b == False()) 
+                return 0; //if or2(0,0)
+            else    //if or2(0,a)
+                return b;
+            
 }
