@@ -103,7 +103,7 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
             if(it.id == False())
                 return 0;
             else
-                return 1;
+                return it.low;
         else
             std::out_of_range("No existing entry for variable!!!");
     }
