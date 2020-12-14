@@ -112,7 +112,14 @@ TEST_F(ManagerTest, findNodes)
 TEST_F(ManagerTest, or2_terminal)
 {
     BDD_ID orID1 = my_manager.or2(0,0);
-    ASSERT_TRUE (orID1 == 0);
+    BDD_ID orID2 = my_manager.or2(1,0);
+    BDD_ID orID3 = my_manager.or2(0,1);
+
+
+    ASSERT_TRUE(orID1 == 0);
+    ASSERT_TRUE(orID2 == 1); 
+    ASSERT_TRUE(orID3 == 1);
+
 }
 
 TEST_F(ManagerTest, and2_terminals)
