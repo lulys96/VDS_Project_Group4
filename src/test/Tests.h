@@ -115,42 +115,11 @@ TEST_F(ManagerTest, and2_terminals)
     BDD_ID andID2 = my_manager.and2(0,1);
     BDD_ID andID3 = my_manager.and2(1,0);
     BDD_ID andID4 = my_manager.and2(1,1);
-    std::set<BDD_ID> nodes1;
-    my_manager.findNodes(andID1,nodes1);
-    const bool is_in1 = (nodes1.find(andID1) != nodes1.end()) &
-                       (nodes1.find(0) != nodes1.end());
-
-    std::set<BDD_ID> nodes2;
-    my_manager.findNodes(andID2,nodes2);
-    const bool is_in2 = (nodes2.find(andID2) != nodes2.end()) &
-                       (nodes2.find(0) != nodes2.end()) &
-                       (nodes2.find(1) != nodes2.end());
-
-    std::set<BDD_ID> nodes3;
-    my_manager.findNodes(andID3,nodes3);
-    const bool is_in3 = (nodes3.find(andID3) != nodes3.end()) &
-                       (nodes3.find(0) != nodes3.end());
-
-        std::set<BDD_ID> nodes4;
-    my_manager.findNodes(andID4,nodes4);
-    const bool is_in4 = (nodes4.find(andID4) != nodes4.end()) &
-                       (nodes4.find(0) != nodes4.end()) &
-                       (nodes4.find(1) != nodes4.end());                
-
-    ASSERT_TRUE(my_manager.topVar(andID1)==0);
-    ASSERT_TRUE(my_manager.topVar(andID2)==0);
-    ASSERT_TRUE(my_manager.topVar(andID3)==1);
-    ASSERT_TRUE(my_manager.topVar(andID4)==1);
-
-    ASSERT_TRUE(is_in1);
-    ASSERT_TRUE(is_in2);
-    ASSERT_TRUE(is_in3);
-    ASSERT_TRUE(is_in4);
-
-    ASSERT_TRUE(andID1==0); //equal to terminal node zero 
-    ASSERT_TRUE(andID2==2);
-    ASSERT_TRUE(andID3==3);
-    ASSERT_TRUE(andID4==4);
+            
+    ASSERT_TRUE(andID1==0);  
+    ASSERT_TRUE(andID2==0);
+    ASSERT_TRUE(andID3==0);
+    ASSERT_TRUE(andID4==1);
 }
 
 TEST_F(ManagerTest, and2)

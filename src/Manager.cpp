@@ -128,7 +128,6 @@ BDD_ID Manager::coFactorTrue(const BDD_ID f)
         else
             std::out_of_range("No existing entry for variable!!!");
     }
-
 }
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f)
@@ -146,7 +145,14 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
 }
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
-{
-    BDD_ID newID = ite(a,b,0);
-    return newID;
+{   
+    // //topVar is terminal node
+    // if (isConstant(a)) {
+    //     if (a==0) return a;
+    //     else return b;
+    // }
+    // else {
+    // BDD_ID newID = ite(a,b,0);
+    // return newID;
+    }
 }
