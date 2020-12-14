@@ -34,7 +34,7 @@ TEST_F(ManagerTest, CoFactorFalse)
     ASSERT_TRUE(my_manager.coFactorFalse(1));
 
     f = my_manager.createVar("x1");
-   // ASSERT_TRUE(my_manager.coFactorFalse(f)==0);
+    ASSERT_TRUE(my_manager.coFactorFalse(f)==0);
 }
 
 TEST_F(ManagerTest, CoFactorPositiv)
