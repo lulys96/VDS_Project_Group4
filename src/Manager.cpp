@@ -150,3 +150,8 @@ BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
     BDD_ID newID = ite(a,b,0);
     return newID;
 }
+
+BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
+{
+
+}
