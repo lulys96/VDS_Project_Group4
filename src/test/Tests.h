@@ -129,8 +129,13 @@ TEST_F(ManagerTest, or2_var)
 {
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID orID1 = my_manager.or2(0,idA);
+    BDD_ID orID2 = my_manager.or2(1,idA);
+    BDD_ID orID3 = my_manager.or2(idA,0);
 
     ASSERT_TRUE(orID1 == idA);
+    ASSERT_TRUE(orID2 == 1);
+    ASSERT_TRUE(orID3 == idA);
+
 
 
 }
