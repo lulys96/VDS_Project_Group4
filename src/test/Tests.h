@@ -47,7 +47,7 @@ TEST_F(ManagerTest, CtorTableTermNodes)
 TEST_F(ManagerTest, coFactorFalse)
 {
     BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorFalse(f))<<"No existing entry for variable!!!";
+    ASSERT_NO_THROW(my_manager.coFactorFalse(f));
     ASSERT_FALSE(my_manager.coFactorFalse(0));
     ASSERT_TRUE(my_manager.coFactorFalse(1));
 
@@ -57,8 +57,8 @@ TEST_F(ManagerTest, coFactorFalse)
 
 TEST_F(ManagerTest, coFactorPositiv)
 {
-    BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for variable!!!";
+    BDD_ID f = 5;
+    ASSERT_THROW(my_manager.coFactorTrue(f), std::out_of_range);
     ASSERT_FALSE(my_manager.coFactorTrue(0));
     ASSERT_TRUE(my_manager.coFactorTrue(1));
 
@@ -69,8 +69,9 @@ TEST_F(ManagerTest, coFactorPositiv)
 
 TEST_F(ManagerTest, coFactorPositiv2)
 {
-    BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for given ID!!!";
+    BDD_ID f,x;
+
+    ASSERT_NO_THROW(my_manager.coFactorTrue(f,x))<<"No existing entry for given ID!!!";
 
 }
 

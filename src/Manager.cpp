@@ -71,8 +71,6 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
         }
     }
 
-    BDD_ID T = ite(coFactorTrue(i),coFactorTrue(t),coFactorTrue(e));
-
     TableEntry new_node = TableEntry();
     new_node.label = ""; //no label yet
     new_node.high = t;
