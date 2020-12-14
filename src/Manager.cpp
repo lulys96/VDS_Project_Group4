@@ -167,7 +167,7 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
                 return 1;
             else
                 return a;
-   // else return a;
+    else return a;
        
             
 }
