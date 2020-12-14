@@ -22,7 +22,8 @@ TEST_F(ManagerTest, CtorTableSize)
 
 TEST_F(ManagerTest, isConstant) 
 {
-    ASSERT_TRUE(my_manager.isConstant(0));
+    ASSERT_EQ(my_manager.isConstant(0), true);
+    ASSERT_EQ(my_manager.isConstant(1), true);
 }
 
 TEST_F(ManagerTest, CtorTableTermNodes) 

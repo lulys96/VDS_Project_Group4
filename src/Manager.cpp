@@ -26,6 +26,8 @@ Manager::Manager()
 
 bool Manager::isConstant(const BDD_ID f)
 {
+ //   if(f == False() || f == True())
+   //     return true;
 
 }
 
