@@ -65,19 +65,55 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
-    for (auto& it : uni_table) {
-        if ((it.top_var == i) && (it.high == t) && (it.low == e) ) {
-            return it.id;
-        }
-    }
-    TableEntry new_node = TableEntry();
-    new_node.label = ""; //no label yet
-    new_node.high = t;
-    new_node.low = e;
-    new_node.id = uniqueTableSize();
-    new_node.top_var = i;
-    uni_table.push_back(new_node);
-    return new_node.id;
+    // //If it is a terminal case, return the result
+    // if (isConstant(i)) {
+    //     if (i==1) { if (isConstant(t)) return t;}
+    //     else      { if (isConstant(e)) return e;}
+    // }
+    // //If there is an identical entry, return the id
+    // for (auto& it : uni_table) {
+    //     if ((it.top_var == i) && (it.high == t) && (it.low == e) ) {
+    //         return it.id; 
+    //     }
+    // }
+    // //Find topVar
+    // BDD_ID topVariable = topVarFromSet (i,t,e);
+    // BDD_ID rhigh = ite(coFactorTrue(i,topVariable),
+    //                    coFactorTrue(t,topVariable),
+    //                    coFactorTrue(e,topVariable));
+    
+    // BDD_ID rlow = ite(coFactorFalse(i,topVariable),
+    //                   coFactorFalse(t,topVariable),
+    //                   coFactorFalse(e,topVariable));
+    // if (rhigh == rlow) return rhigh;
+    // else {
+    // //Check if exists, return existent
+    //     for (auto& it : uni_table) {
+    //         if ((it.top_var == topVariable) && 
+    //             (it.high == rhigh) && (it.low == rlow)) return it.id; 
+    //     }
+    // //If doesn't exist, create a new one.
+    //     TableEntry new_node = TableEntry();
+    //     new_node.label = ""; //no label yet
+    //     new_node.high = rhigh;
+    //     new_node.low = rlow;
+    //     new_node.id = uniqueTableSize();
+    //     new_node.top_var = topVariable;
+    //     uni_table.push_back(new_node);
+    //     return new_node.id;
+    // }
+    return 0;
+}
+
+BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
+{
+    std::set<BDD_ID> nodes;
+    if (!isConstant(i)) nodes.insert(i);
+    if (!isConstant(t)) nodes.insert(t);
+    if (!isConstant(e)) nodes.insert(e);
+    BDD_ID topVariable = *nodes.begin();
+
+    return topVariable;
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root)
@@ -127,7 +163,7 @@ BDD_ID Manager::coFactorTrue(const BDD_ID f)
             else
                 return it.high;
         else
-            std::out_of_range("No existing entry for variable!!!");
+            std::out_of_range("No existing entry for the given ID!!!");
     }
 }
 
@@ -177,3 +213,4 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
             return a; //if or2(a,0)
             
 }
+

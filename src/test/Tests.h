@@ -47,7 +47,7 @@ TEST_F(ManagerTest, CtorTableTermNodes)
 TEST_F(ManagerTest, CoFactorFalse)
 {
     BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorFalse(f))<<"No existing entry for variable!!!";
+    //ASSERT_THROW(my_manager.coFactorFalse(f));
     ASSERT_FALSE(my_manager.coFactorFalse(0));
     ASSERT_TRUE(my_manager.coFactorFalse(1));
 
@@ -58,7 +58,7 @@ TEST_F(ManagerTest, CoFactorFalse)
 TEST_F(ManagerTest, CoFactorPositiv)
 {
     BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorTrue(f))<<"No existing entry for variable!!!";
+   // ASSERT_THROW(my_manager.coFactorTrue(f))<<"No existing entry for variable!!!";
     ASSERT_FALSE(my_manager.coFactorTrue(0));
     ASSERT_TRUE(my_manager.coFactorTrue(1));
 
@@ -137,9 +137,6 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_TRUE(orID1 == idA);
     ASSERT_TRUE(orID2 == 1);
     ASSERT_TRUE(orID3 == idA);
-
-
-
 }
 TEST_F(ManagerTest, and2_terminals)
 {   
@@ -172,6 +169,13 @@ TEST_F(ManagerTest, and2)
     ASSERT_TRUE(my_manager.topVar(andID)==2);
     ASSERT_TRUE(is_in);
 
+}
+
+TEST_F(ManagerTest, topVarFromSet)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID topVariable = my_manager.topVarFromSet(idB,1,idA);
 }
 
 
