@@ -114,7 +114,7 @@ TEST_F(ManagerTest, or2_terminal)
     BDD_ID orID1 = my_manager.or2(0,0);
     BDD_ID orID2 = my_manager.or2(1,1);
     BDD_ID orID3 = my_manager.or2(1,0);
-    BDD_ID orID4 = my_manager.or2(0,1);
+    BDD_ID orID4 = my_manager.or2(0,1);    
 
 
     ASSERT_TRUE(orID1 == 0);
@@ -125,6 +125,15 @@ TEST_F(ManagerTest, or2_terminal)
 
 }
 
+TEST_F(ManagerTest, or2_var)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID orID1 = my_manager.or2(0,idA);
+
+    ASSERT_TRUE(orID1 == idA);
+
+
+}
 TEST_F(ManagerTest, and2_terminals)
 {   
     BDD_ID andID1 = my_manager.and2(0,0);
