@@ -24,6 +24,7 @@ TEST_F(ManagerTest, isConstant)
 {
     ASSERT_EQ(my_manager.isConstant(0), true);
     ASSERT_EQ(my_manager.isConstant(1), true);
+    ASSERT_EQ(my_manager.isConstant(2), false);
 }
 
 TEST_F(ManagerTest, CtorTableTermNodes) 
