@@ -73,17 +73,17 @@ BDD_ID Manager::topVar(const BDD_ID f)
 
 void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 {
-    // nodes_of_root.insert(uni_table[root].id);
-    // nodes_of_root.insert(uni_table[root].high);
-    // nodes_of_root.insert(uni_table[root].low);
+    nodes_of_root.insert(uni_table[root].id);
+    nodes_of_root.insert(uni_table[root].high);
+    nodes_of_root.insert(uni_table[root].low);
 
-    // if (uni_table[root].high > 1) {
-    //     findNodes(uni_table[root].high, nodes_of_root );
-    // }
+    if (uni_table[root].high > 1) {
+        findNodes(uni_table[root].high, nodes_of_root );
+    }
 
-    // if (uni_table[root].low > 1) {
-    //     findNodes(uni_table[root].low, nodes_of_root );
-    // }
+    if (uni_table[root].low > 1) {
+        findNodes(uni_table[root].low, nodes_of_root );
+    }
 }
 
 BDD_ID Manager::createVar(const std::string &label)
