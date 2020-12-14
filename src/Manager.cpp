@@ -100,7 +100,15 @@ BDD_ID Manager::createVar(const std::string &label)
 
 BDD_ID Manager::coFactorTrue(const BDD_ID f)
 {
-
+    for (auto& it : uni_table) {
+        if (it.id == f)
+             if(it.id == True())
+                return 1;
+            else
+                return it.high;
+        else
+            std::out_of_range("No existing entry for variable!!!");
+    }
 
 }
 
