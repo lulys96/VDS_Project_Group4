@@ -170,6 +170,42 @@ TEST_F(ManagerTest, findNodes)
     ASSERT_FALSE(not_in);
 }
 
+TEST_F(ManagerTest, findVars_terminal)
+{
+    std::set<BDD_ID> var_false;
+    my_manager.findVars(0,var_false);
+    ASSERT_EQ((var_false.find(0) != var_false.end()),true);
+
+    std::set<BDD_ID> var_true;
+    my_manager.findVars(1,var_true);
+    ASSERT_EQ((var_true.find(1) != var_true.end()),true);
+}
+TEST_F(ManagerTest, findVars)
+{   
+    //TODO find more cases to test
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID idC = my_manager.createVar("c");
+    BDD_ID idD = my_manager.createVar("d");
+    BDD_ID andID1 = my_manager.ite (idA,idB,0);
+    BDD_ID andID2 = my_manager.ite (idC,andID1,0);
+
+    BDD_ID andID3= my_manager.ite (idA,idD,0);
+
+    std::set<BDD_ID> vars;
+    my_manager.findVars(andID2,vars);
+    const bool is_in = (vars.find(idA) != vars.end()) &  //top var of andID2
+                       (vars.find(idB) != vars.end());  //top var of node ID7
+                       
+    const bool not_in = (vars.find(andID1) != vars.end()) & 
+                        (vars.find(andID2) != vars.end()) & 
+                        (vars.find(idC) != vars.end()) & 
+                        (vars.find(idD) != vars.end()) & 
+                        (vars.find(7) != vars.end()); 
+    ASSERT_EQ(is_in,true);
+    ASSERT_EQ(not_in,false);
+}
+
 TEST_F(ManagerTest, or2_terminal)
 {
     BDD_ID orID1 = my_manager.or2(0,0);
