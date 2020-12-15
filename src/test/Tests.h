@@ -46,8 +46,8 @@ TEST_F(ManagerTest, CtorTableTermNodes)
 
 TEST_F(ManagerTest, coFactorFalse)
 {
-    BDD_ID f;
-    ASSERT_NO_THROW(my_manager.coFactorFalse(f));
+    BDD_ID f = 10;
+    ASSERT_THROW(my_manager.coFactorFalse(f), std::out_of_range);
     ASSERT_FALSE(my_manager.coFactorFalse(0));
     ASSERT_TRUE(my_manager.coFactorFalse(1));
 
@@ -68,9 +68,11 @@ TEST_F(ManagerTest, coFactorPositiv)
 
 TEST_F(ManagerTest, coFactorPositiv2)
 {
-    BDD_ID f,x;
+    BDD_ID f = 5,x;
+    ASSERT_THROW(my_manager.coFactorTrue(f,x), std::out_of_range);
+    ASSERT_EQ(my_manager.coFactorTrue(0,0), 0);
+    ASSERT_EQ(my_manager.coFactorTrue(1,1), 1);
 
-    ASSERT_NO_THROW(my_manager.coFactorTrue(f,x))<<"No existing entry for given ID!!!";
 
 }
 
