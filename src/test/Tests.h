@@ -86,18 +86,18 @@ TEST_F(ManagerTest, coFactorPositiv2)
 TEST_F(ManagerTest, coFactorNegative2)
 {
     BDD_ID f = 5,x;
-    ASSERT_THROW(my_manager.coFactorTrue(f,x), std::out_of_range);
-    ASSERT_EQ(my_manager.coFactorTrue(0,0), 0);
-    ASSERT_EQ(my_manager.coFactorTrue(1,1), 1);
-    ASSERT_EQ(my_manager.coFactorTrue(1,0), 1);
-    ASSERT_EQ(my_manager.coFactorTrue(0,1), 0);
+    ASSERT_THROW(my_manager.coFactorFalse(f,x), std::out_of_range);
+    ASSERT_EQ(my_manager.coFactorFalse(0,0), 0);
+    ASSERT_EQ(my_manager.coFactorFalse(1,1), 1);
+    ASSERT_EQ(my_manager.coFactorFalse(1,0), 1);
+    ASSERT_EQ(my_manager.coFactorFalse(0,1), 0);
 
     f = my_manager.createVar("x1");
-    ASSERT_EQ(my_manager.coFactorTrue(f,0), f);
-    ASSERT_EQ(my_manager.coFactorTrue(f,1), f);
-    ASSERT_EQ(my_manager.coFactorTrue(1,f), 1);
-    ASSERT_EQ(my_manager.coFactorTrue(0,f), 0);
-  //  ASSERT_EQ(my_manager.coFactorTrue(f,f), 0);
+    ASSERT_EQ(my_manager.coFactorFalse(f,0), f);
+    ASSERT_EQ(my_manager.coFactorFalse(f,1), f);
+    ASSERT_EQ(my_manager.coFactorFalse(1,f), 1);
+    ASSERT_EQ(my_manager.coFactorFalse(0,f), 0);
+    ASSERT_EQ(my_manager.coFactorFalse(f,f), 0);
 
 }
 
