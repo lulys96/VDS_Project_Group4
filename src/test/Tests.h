@@ -64,7 +64,6 @@ TEST_F(ManagerTest, coFactorPositiv)
 
     f = my_manager.createVar("x1");
     ASSERT_TRUE(my_manager.coFactorTrue(f)==1);
-
  }
 
 TEST_F(ManagerTest, coFactorPositiv2)
@@ -91,6 +90,16 @@ TEST_F(ManagerTest, createVar)
     ASSERT_TRUE(is_in);
     ASSERT_TRUE(my_manager.topVar(2)==2);
 
+}
+
+TEST_F(ManagerTest, ite)
+{
+    ASSERT_EQ(my_manager.ite (0,0,1),1);
+    ASSERT_EQ(my_manager.ite (0,1,0),0);
+    ASSERT_EQ(my_manager.ite (1,1,0),1);
+    ASSERT_EQ(my_manager.ite (1,0,1),0);
+    BDD_ID idA = my_manager.createVar("a");
+    ASSERT_EQ(my_manager.ite (idA,1,0),2);
 }
 
 TEST_F(ManagerTest, findNodes)
