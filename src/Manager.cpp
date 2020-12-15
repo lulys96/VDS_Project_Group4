@@ -249,17 +249,18 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 
 BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
 {
-    // if (isConstant(a)) {
-    //     if (a==0) return 1;
-    //     else return neg(b);
-    // }
-    // else if (isConstant(b)) {
-    //     if (b==0) return 1;
-    //     else return neg(a);
-    // }
-    // else {
-    // BDD_ID newID = ite(a,not(b),1);
-    // return newID;        
+    if (isConstant(a)) {
+        if (a==0) return 1;
+        else return neg(b);
+    }
+    else if (isConstant(b)) {
+        if (b==0) return 1;
+        else return neg(a);
+    }
+    else {
+    BDD_ID newID = ite(a,not(b),1); //Ite not working when call for functions (only for var/term)
+    return newID;        
+    }
 }
 
 BDD_ID Manager::neg(const BDD_ID a)

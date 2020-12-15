@@ -258,7 +258,7 @@ TEST_F(ManagerTest, nand2)
     std::set<BDD_ID> nodes;
     my_manager.findNodes(andID,nodes);
     const bool is_in = (nodes.find(andID) != nodes.end()) &
-                       (nodes.find(0) != nodes.end()) &
+                       (nodes.find(1) != nodes.end()) &
                        (nodes.find(idB) != nodes.end());
     
     ASSERT_TRUE(andID==andID2);
