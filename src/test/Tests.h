@@ -392,10 +392,10 @@ TEST_F(ManagerTest, neg)
     ASSERT_NE(my_manager.neg(idA),idA);
     ASSERT_EQ(my_manager.neg(negA),idA);
 
-    BDD_ID andID = my_manager.ite (idA,idB,0);
+    BDD_ID andID = my_manager.ite(idA,idB,0);
     BDD_ID nandID = my_manager.neg(andID);
 
-    ASSERT_NE(nandID,andID);
+    ASSERT_NE(nandID, andID);
     ASSERT_EQ(my_manager.neg(nandID),andID);
 }
 
@@ -436,8 +436,14 @@ TEST_F(ManagerTest, nor2_var)
     ASSERT_EQ(norID3, my_manager.neg(idA));
     ASSERT_EQ(norID4, 0);
     ASSERT_EQ(norID5, 0);
-    ASSERT_EQ(norID6, 6);
-    ASSERT_EQ(norID7, 6);
+    
+    ASSERT_EQ(my_manager.coFactorTrue(norID6), 0);
+    ASSERT_EQ(my_manager.coFactorFalse(norID6), my_manager.neg(idB));
+
+    ASSERT_EQ(norID6,6);
+    ASSERT_TRUE(norID6==norID7);
+    ASSERT_TRUE(my_manager.getTopVarName(norID6)=="a");
+    ASSERT_TRUE(my_manager.topVar(norID6)==2);
 }
 
 
