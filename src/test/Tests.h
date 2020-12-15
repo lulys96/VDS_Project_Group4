@@ -283,10 +283,11 @@ TEST_F(ManagerTest, and2)
                        (nodes.find(0) != nodes.end()) &
                        (nodes.find(idB) != nodes.end());
     
-    ASSERT_TRUE(andID==4);
-    ASSERT_TRUE(andID2==4);
+    ASSERT_EQ(my_manager.uniqueTableSize(),5);
+    ASSERT_EQ(andID,4);
+    ASSERT_EQ(andID2,4);
     ASSERT_TRUE(my_manager.getTopVarName(andID)=="a");
-    ASSERT_TRUE(my_manager.topVar(andID)==2);
+    ASSERT_EQ(my_manager.topVar(andID),2);
     ASSERT_TRUE(is_in);
     //TODO: extend tests to work with ands of ands
 }
@@ -322,10 +323,11 @@ TEST_F(ManagerTest, nand2)
                        (nodes.find(0) != nodes.end()) &
                        (nodes.find(4) != nodes.end()); //node representing neg(b) createb by nand
     
+    ASSERT_EQ(my_manager.uniqueTableSize(),6);
     ASSERT_EQ(nandID,5);
     ASSERT_TRUE(nandID==nandID2);
     ASSERT_TRUE(my_manager.getTopVarName(nandID)=="a");
-    ASSERT_TRUE(my_manager.topVar(nandID)==2);
+    ASSERT_EQ(my_manager.topVar(nandID),2);
     ASSERT_TRUE(is_in);
     //TODO: extend tests to work with nands of nands
 }
