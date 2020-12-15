@@ -190,7 +190,7 @@ TEST_F(ManagerTest, xor2_terminal)
     ASSERT_EQ(xorID1, 0);
     ASSERT_EQ(xorID2, 0); 
     ASSERT_EQ(xorID3, 1);
-    ASSERT_TRUE(orID4 == 1);
+    ASSERT_EQ(xorID4, 1);
 
 
 }
