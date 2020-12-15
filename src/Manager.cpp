@@ -179,34 +179,33 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
 BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
 {
     if(uni_table.size() > f){
-        if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
+        BDD_ID top = topVar(f);
+        if(isConstant(x) || isConstant(f) || top > x)
             return f;
-        else if(topVar(f) == x)
+        else if(top == x)
             return uni_table[f].high;
         else {
             BDD_ID    T = coFactorTrue(uni_table[f].high, x);
             BDD_ID    F = coFactorTrue(uni_table[f].low, x);
-            return ite(uni_table[f].top_var, T, F);
+            return ite(top, T, F);
         }   
     }
     else
         throw std::out_of_range("No existing entry for given ID!!!");
-
-
-
 }
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 {
     if(uni_table.size() > f){
-        if(isConstant(x) || isConstant(f) || topVar(f) > x)
+        BDD_ID top = topVar(f);
+        if(isConstant(x) || isConstant(f) || top > x)
             return f;
-        if(topVar(f) == x)
+        if(top == x)
             return uni_table[f].low;
         else {
             BDD_ID    T = coFactorFalse(uni_table[f].high, x);
             BDD_ID    F = coFactorFalse(uni_table[f].low, x);
-            return ite(uni_table[f].top_var, T, F);
+            return ite(top, T, F);
         }
     }
     else
