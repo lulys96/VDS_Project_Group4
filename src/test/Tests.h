@@ -123,9 +123,15 @@ TEST_F(ManagerTest, ite_terminal_var)
     ASSERT_EQ(my_manager.ite (0,0,1),1);
     ASSERT_EQ(my_manager.ite (0,1,0),0);
     ASSERT_EQ(my_manager.ite (1,1,0),1);
+    ASSERT_EQ(my_manager.ite (0,1,0),0);
     ASSERT_EQ(my_manager.ite (1,0,1),0);
+    ASSERT_EQ(my_manager.uniqueTableSize(),2);
     BDD_ID idA = my_manager.createVar("a");
     ASSERT_EQ(my_manager.ite (idA,1,0),2);
+    ASSERT_EQ(my_manager.uniqueTableSize(),3);
+    BDD_ID idB = my_manager.createVar("b");
+    ASSERT_EQ(my_manager.ite (idA,idB,idB),idB);
+    ASSERT_EQ(my_manager.ite (idA,idA,0),idA); //AND(idA,idA)=idA
 }
 
 TEST_F(ManagerTest, ite_cofactor)
@@ -149,15 +155,16 @@ TEST_F(ManagerTest, findNodes)
 
     std::set<BDD_ID> nodes;
     my_manager.findNodes(andID2,nodes);
-    const bool is_in = (nodes.find(0) != nodes.end()) &
+    const bool is_in = (nodes.find(0) != nodes.end()) &  //ok
+                       (nodes.find(7) != nodes.end()) &// ID=7,topVar=B,low=0,high=C (created to be andID2_high)
                        (nodes.find(1) != nodes.end()) &
-                       (nodes.find(idB) != nodes.end()) &
-                       (nodes.find(andID1) != nodes.end()) &
+                       (nodes.find(idC) != nodes.end()) & //high of id7
                        (nodes.find(andID2) != nodes.end());
                        
-    const bool not_in = (nodes.find(andID3) != nodes.end()) & // different operation
-                        (nodes.find(idA) != nodes.end()) & //top var, not high/low
-                        (nodes.find(idC) != nodes.end()) & //top var, not high/low
+    const bool not_in = (nodes.find(andID1) != nodes.end()) & // not added directly because it needs to be ordered
+                        (nodes.find(andID3) != nodes.end()) & // different operation
+                        (nodes.find(idA) != nodes.end()) & //top var of andID2 and and ID1
+                        (nodes.find(idB) != nodes.end()) & //top var of id7
                         (nodes.find(idD) != nodes.end()); //not related to andID2
     ASSERT_TRUE(is_in);
     ASSERT_FALSE(not_in);
@@ -174,8 +181,6 @@ TEST_F(ManagerTest, or2_var)
     BDD_ID orID5 = my_manager.or2(idA,idA);
     BDD_ID orID6 = my_manager.or2(idA,idB);
     BDD_ID orID7 = my_manager.or2(idB,idA);
-
-
 
     ASSERT_EQ(orID1, idA);
     ASSERT_EQ(orID2, 1);
@@ -197,8 +202,6 @@ TEST_F(ManagerTest, or2_terminal)
     ASSERT_TRUE(orID2 == 1); 
     ASSERT_TRUE(orID3 == 1);
     ASSERT_TRUE(orID4 == 1);
-
-
 }
 
 TEST_F(ManagerTest, xor2_terminal)
@@ -208,13 +211,10 @@ TEST_F(ManagerTest, xor2_terminal)
     BDD_ID xorID3 = my_manager.xor2(1,0);
     BDD_ID xorID4 = my_manager.xor2(0,1);    
 
-
     ASSERT_EQ(xorID1, 0);
     ASSERT_EQ(xorID2, 0); 
     ASSERT_EQ(xorID3, 1);
     ASSERT_EQ(xorID4, 1);
-
-
 }
 
 TEST_F(ManagerTest, xor2_var)
@@ -290,17 +290,19 @@ TEST_F(ManagerTest, nand2)
 {   
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
-    BDD_ID andID = my_manager.nand2(idA,idB);
-    BDD_ID andID2 = my_manager.nand2(idA,idB);
+    BDD_ID nandID = my_manager.nand2(idA,idB);
+    BDD_ID nandID2 = my_manager.nand2(idA,idB);
     std::set<BDD_ID> nodes;
-    my_manager.findNodes(andID,nodes);
-    const bool is_in = (nodes.find(andID) != nodes.end()) &
+    my_manager.findNodes(nandID,nodes);
+    const bool is_in = (nodes.find(nandID) != nodes.end()) &
                        (nodes.find(1) != nodes.end()) &
-                       (nodes.find(idB) != nodes.end());
+                       (nodes.find(0) != nodes.end()) &
+                       (nodes.find(4) != nodes.end()); //node representing neg(b) createb by nand
     
-    ASSERT_TRUE(andID==andID2);
-    ASSERT_TRUE(my_manager.getTopVarName(andID)=="a");
-    ASSERT_TRUE(my_manager.topVar(andID)==2);
+    ASSERT_EQ(nandID,5);
+    ASSERT_TRUE(nandID==nandID2);
+    ASSERT_TRUE(my_manager.getTopVarName(nandID)=="a");
+    ASSERT_TRUE(my_manager.topVar(nandID)==2);
     ASSERT_TRUE(is_in);
     //TODO: extend tests to work with nands of nands
 }
@@ -319,11 +321,18 @@ TEST_F(ManagerTest, neg)
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID negA = my_manager.neg(idA);
+    BDD_ID negA2 = my_manager.neg(idA);
     BDD_ID negB = my_manager.neg(idB);
-    
+
+    ASSERT_EQ(negA2,negA);
     ASSERT_NE(my_manager.neg(idA),idA);
     ASSERT_EQ(my_manager.neg(negA),idA);
-    //TODO: extend tests to work with neg of other functions
+
+    BDD_ID andID = my_manager.ite (idA,idB,0);
+    BDD_ID nandID = my_manager.neg(andID);
+
+    ASSERT_NE(nandID,andID);
+    ASSERT_EQ(my_manager.neg(nandID),andID);
 }
 
 TEST_F(ManagerTest, topVarFromSet)

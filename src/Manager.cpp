@@ -66,20 +66,13 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
-    //If it is a terminal case, return the result
+    //If it is a terminal case, return the result 
     if (isConstant(i)) {
         if (i==1) return t;
         else return e;
     }
-    //else if ... if t and e are equal return one of them
-    //if i is var, t is true and e false then return the var (i)
+    else if (t==e) return t ;
 
-    //If there is an identical entry, return the id
-    // for (auto& it : uni_table) {
-    //     if ((it.top_var == i) && (it.high == t) && (it.low == e) ) { 
-    //         return it.id; 
-    //     }
-    // }
     //Find topVar
     BDD_ID topVariable = topVarFromSet (i,t,e);
     BDD_ID rhigh = ite(coFactorTrue(i,topVariable),
@@ -106,7 +99,6 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
         uni_table.push_back(new_node);
         return new_node.id;
     }
-    //return 0;
 }
 
 BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
@@ -252,39 +244,14 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 
 BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
 {
-    if (isConstant(a)) {
-        if (a==0) return 1;
-        else return neg(b);
-    }
-    else if (isConstant(b)) {
-        if (b==0) return 1;
-        else return neg(a);
-    }
-    else {
-    BDD_ID newID = ite(a,not(b),1); //Ite not working when call for functions (only for var/term)
+    BDD_ID newID = ite(a,neg(b),1); //Ite not working when call for functions (only for var/term)
     return newID;        
-    }
 }
 
 BDD_ID Manager::neg(const BDD_ID a)
 {
-    if (isConstant(a)) {
-        if (a==0) return 1;
-        else return 0;
-    }
-    for (auto& it : uni_table) {
-        if ((it.top_var == uni_table[a].top_var) && 
-            (it.high == uni_table[a].low) && 
-            (it.low == uni_table[a].high)) return it.id; 
-    }
-    TableEntry new_node = TableEntry();
-    new_node.label = "neg_"+uni_table[a].label; //no label yet
-    new_node.high = uni_table[a].low;
-    new_node.low = uni_table[a].high;
-    new_node.id = uniqueTableSize();
-    new_node.top_var = uni_table[a].top_var;
-    uni_table.push_back(new_node);
-    return new_node.id;
+    BDD_ID newID = ite(a,0,1);
+    return newID;
 }
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
