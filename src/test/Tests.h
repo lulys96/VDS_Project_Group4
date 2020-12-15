@@ -181,16 +181,16 @@ TEST_F(ManagerTest, or2_terminal)
 
 TEST_F(ManagerTest, xor2_terminal)
 {
-    BDD_ID orID1 = my_manager.or2(0,0);
-    BDD_ID orID2 = my_manager.or2(1,1);
-    BDD_ID orID3 = my_manager.or2(1,0);
-    BDD_ID orID4 = my_manager.or2(0,1);    
+    BDD_ID xorID1 = my_manager.xor2(0,0);
+    BDD_ID xorID2 = my_manager.xor2(1,1);
+    BDD_ID xorID3 = my_manager.xor2(1,0);
+    BDD_ID xorID4 = my_manager.xor2(0,1);    
 
 
-    ASSERT_TRUE(orID1 == 0);
-    //ASSERT_TRUE(orID2 == 0); 
-    //ASSERT_TRUE(orID3 == 1);
-    //ASSERT_TRUE(orID4 == 1);
+    ASSERT_EQ(xorID1, 0);
+    ASSERT_EQ(xorID2, 0); 
+    ASSERT_EQ(xorID3, 1);
+    ASSERT_TRUE(orID4 == 1);
 
 
 }
