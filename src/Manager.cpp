@@ -255,14 +255,34 @@ BDD_ID Manager::neg(const BDD_ID a)
 }
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
-    if(isConstant(a) && isConstant(b)){
+    // if(isConstant(a) && isConstant(b)){
+    //     if(a == b)
+    //         return 0;
+    //     else return 1;
+    // }
+    // else if (isConstant(a))
+    //     return b; 
+    // else if(a == b)
+    //     return 0;
+
+    if(uni_table.size() >= a && uni_table.size() >= b){
         if(a == b)
             return 0;
-        else return 1;
+        else{
+            BDD_ID newID = ite(a,neg(b),b);
+            return newID;
+        }
     }
-    else if (isConstant(a))
-        return b; 
-    else if(a == b)
-        return a;
-
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
  }
+
+BDD_ID Manager::nor2(const BDD_ID a, const BDD_ID b)
+{
+    if(uni_table.size() >= a && uni_table.size() >= b){
+        BDD_ID newID = ite(a,0,neg(b));
+        return newID;
+    }
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
+}

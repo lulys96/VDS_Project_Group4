@@ -197,7 +197,6 @@ TEST_F(ManagerTest, or2_terminal)
     BDD_ID orID3 = my_manager.or2(1,0);
     BDD_ID orID4 = my_manager.or2(0,1);    
 
-
     ASSERT_TRUE(orID1 == 0);
     ASSERT_TRUE(orID2 == 1); 
     ASSERT_TRUE(orID3 == 1);
@@ -210,6 +209,7 @@ TEST_F(ManagerTest, xor2_terminal)
     BDD_ID xorID2 = my_manager.xor2(1,1);
     BDD_ID xorID3 = my_manager.xor2(1,0);
     BDD_ID xorID4 = my_manager.xor2(0,1);    
+    ASSERT_EQ(my_manager.uniqueTableSize(), 2);
 
     ASSERT_EQ(xorID1, 0);
     ASSERT_EQ(xorID2, 0); 
@@ -222,22 +222,24 @@ TEST_F(ManagerTest, xor2_var)
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID xorID1 = my_manager.xor2(idA,idA);
-    BDD_ID xorID2 = my_manager.xor2(0,idA);
+    ASSERT_EQ(my_manager.uniqueTableSize(), 4);
+
+    BDD_ID xorID2 = my_manager.xor2(0,idB);
+    ASSERT_EQ(my_manager.uniqueTableSize(), 5);
+
     BDD_ID xorID3 = my_manager.xor2(idA,0);
     BDD_ID xorID4 = my_manager.xor2(idA,1);
-    BDD_ID xorID5 = my_manager.xor2(1,idA);
+    BDD_ID xorID5 = my_manager.xor2(1,idB);
     BDD_ID xorID6 = my_manager.xor2(idA,idB);
     BDD_ID xorID7 = my_manager.xor2(idB,idA);
 
-
-
-    ASSERT_EQ(xorID1, idA);
-    ASSERT_EQ(xorID2, idA);
+    ASSERT_EQ(xorID1, 0);
+    ASSERT_EQ(xorID2, idB);
     ASSERT_EQ(xorID3, idA);
-    //ASSERT_EQ(xorID4, 1);
-    //ASSERT_EQ(xorID5, idA);
-    //ASSERT_EQ(xorID6, 4);
-    //ASSERT_EQ(xorID7, 4);
+    ASSERT_EQ(xorID4, my_manager.neg(idA));
+    ASSERT_EQ(xorID5, my_manager.neg(idB));
+    ASSERT_EQ(xorID6, 6);
+    ASSERT_EQ(xorID7, 6);
 }
 
 TEST_F(ManagerTest, and2_terminals)
@@ -334,6 +336,48 @@ TEST_F(ManagerTest, neg)
     ASSERT_NE(nandID,andID);
     ASSERT_EQ(my_manager.neg(nandID),andID);
 }
+
+TEST_F(ManagerTest, nor2_terminal)
+{
+    BDD_ID norID1 = my_manager.nor2(0,0);
+    BDD_ID norID2 = my_manager.nor2(1,1);
+    BDD_ID norID3 = my_manager.nor2(1,0);
+    BDD_ID norID4 = my_manager.nor2(0,1);    
+
+    ASSERT_EQ(norID1, 1);
+    ASSERT_EQ(norID2, 0); 
+    ASSERT_EQ(norID3, 0);
+    ASSERT_EQ(norID4, 0);
+
+    ASSERT_EQ(my_manager.uniqueTableSize(),2);
+}
+
+TEST_F(ManagerTest, nor2_var)
+{
+    BDD_ID a=5, b=10;
+    ASSERT_THROW(my_manager.nor2(a,1), std::out_of_range);
+    ASSERT_THROW(my_manager.nor2(1,b), std::out_of_range);
+    ASSERT_THROW(my_manager.nor2(a,b), std::out_of_range);
+
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID norID1 = my_manager.nor2(idA,idA);
+    BDD_ID norID2 = my_manager.nor2(0,idB);
+    BDD_ID norID3 = my_manager.nor2(idA,0);
+    BDD_ID norID4 = my_manager.nor2(idA,1);
+    BDD_ID norID5 = my_manager.nor2(1,idB);
+    BDD_ID norID6 = my_manager.nor2(idA,idB);
+    BDD_ID norID7 = my_manager.nor2(idB,idA);
+
+    ASSERT_EQ(norID1, my_manager.neg(idA));
+    ASSERT_EQ(norID2, my_manager.neg(idB));
+    ASSERT_EQ(norID3, my_manager.neg(idA));
+    ASSERT_EQ(norID4, 0);
+    ASSERT_EQ(norID5, 0);
+    ASSERT_EQ(norID6, 6);
+    ASSERT_EQ(norID7, 6);
+}
+
 
 TEST_F(ManagerTest, topVarFromSet)
 {
