@@ -89,10 +89,10 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
     if (rhigh == rlow) return rhigh;
     else {
     //Check if exists, return existent
-        for (auto& it : uni_table) {
-            if ((it.top_var == topVariable) && 
-                (it.high == rhigh) && (it.low == rlow)) return it.id; 
-        }
+         for (auto& it : uni_table) {
+             if ((it.top_var == topVariable) && 
+                 (it.high == rhigh) && (it.low == rlow)) return it.id; 
+         }
     //If doesn't exist, create a new one.
         TableEntry new_node = TableEntry();
         new_node.label = ""; //no label yet
@@ -103,7 +103,7 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
         uni_table.push_back(new_node);
         return new_node.id;
     }
-    return 0;
+    //return 0;
 }
 
 BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
