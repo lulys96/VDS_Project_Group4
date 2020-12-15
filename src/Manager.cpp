@@ -215,10 +215,13 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {   
-    //topVar is terminal node
     if (isConstant(a)) {
         if (a==0) return a;
         else return b;
+    }
+    else if (isConstant(b)) {
+        if (b==0) return b;
+        else return a;
     }
     else {
     BDD_ID newID = ite(a,b,0);
@@ -244,3 +247,17 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
         return ite(a,1,b);          
 }
 
+BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
+{
+    // if (isConstant(a)) {
+    //     if (a==0) return 1;
+    //     else return neg(b);
+    // }
+    // else if (isConstant(b)) {
+    //     if (b==0) return 1;
+    //     else return neg(a);
+    // }
+    // else {
+    // BDD_ID newID = ite(a,not(b),1);
+    // return newID;        
+}

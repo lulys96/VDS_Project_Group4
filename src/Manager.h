@@ -52,7 +52,7 @@ class Manager : public ManagerInterface {
 
     BDD_ID neg(const BDD_ID a) override {}
 
-    BDD_ID nand2(const BDD_ID a, const BDD_ID b) override {}
+    BDD_ID nand2(const BDD_ID a, const BDD_ID b) override;
 
     BDD_ID nor2(const BDD_ID a, const BDD_ID b) override {}
 

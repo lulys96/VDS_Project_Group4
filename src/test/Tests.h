@@ -261,13 +261,32 @@ TEST_F(ManagerTest, nand2)
                        (nodes.find(0) != nodes.end()) &
                        (nodes.find(idB) != nodes.end());
     
-    ASSERT_TRUE(andID==4);
-    ASSERT_TRUE(andID2==4);
+    ASSERT_TRUE(andID==andID2);
     ASSERT_TRUE(my_manager.getTopVarName(andID)=="a");
     ASSERT_TRUE(my_manager.topVar(andID)==2);
     ASSERT_TRUE(is_in);
-
     //TODO: extend tests to work with nands of nands
+}
+
+TEST_F(ManagerTest, neg_terminal)
+{   
+    BDD_ID negID1 = my_manager.neg(0);
+    BDD_ID negID2 = my_manager.neg(1);
+            
+    ASSERT_TRUE(negID1==1);  
+    ASSERT_TRUE(negID2==0);
+}
+
+TEST_F(ManagerTest, neg)
+{   
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID negA = my_manager.neg(idA);
+    BDD_ID negB = my_manager.neg(idB);
+    
+    ASSERT_NE(my_manager.neg(idA),idA);
+    ASSERT_EQ(my_manager.neg(negA),idA);
+    //TODO: extend tests to work with neg of other functions
 }
 
 TEST_F(ManagerTest, topVarFromSet)
