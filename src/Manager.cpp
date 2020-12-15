@@ -297,5 +297,20 @@ BDD_ID Manager::neg(const BDD_ID a)
         return b; 
     else if(a == b)
         return a;
-
+    // if(uni_table.size() >= a && uni_table.size() >= b){
+    //     if(a == b)
+    //         return a;
+    //     else{
+    //         BDD_ID newID = ite(a,neg(b),b);
+    //         return newID;
+    //     }
+    // }
+    // else
+    //     throw std::out_of_range("No existing entry for given ID!!!");
  }
+
+BDD_ID Manager::nor2(const BDD_ID a, const BDD_ID b)
+{
+
+    
+}
