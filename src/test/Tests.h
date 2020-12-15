@@ -70,8 +70,10 @@ TEST_F(ManagerTest, coFactorPositiv)
 TEST_F(ManagerTest, coFactorPositiv2)
 {
     BDD_ID f,x;
+    ASSERT_THROW(my_manager.coFactorTrue(f,x), std::out_of_range);
+    //ASSERT_FALSE(my_manager.coFactorTrue(0,0));
+    //ASSERT_TRUE(my_manager.coFactorTrue(1,1));
 
-    ASSERT_NO_THROW(my_manager.coFactorTrue(f,x))<<"No existing entry for given ID!!!";
 
 }
 

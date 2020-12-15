@@ -38,6 +38,7 @@ bool Manager::isVariable(const BDD_ID x)
         return true;
     else return false;
 }
+
 const BDD_ID &Manager::True()
 {
     if ((uni_table[1].high == 1) &&
@@ -156,33 +157,37 @@ BDD_ID Manager::createVar(const std::string &label)
 
 BDD_ID Manager::coFactorTrue(const BDD_ID f)
 {
-        if(uni_table.size() > f)
-           return uni_table[f].high;
-        else
-            throw std::out_of_range("No existing entry for given ID!!!");
+    if(uni_table.size() > f)
+        return uni_table[f].high;
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
 }
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f)
 {
-        if(uni_table.size() > f)
-           return uni_table[f].low;
-        else
-            throw std::out_of_range("No existing entry for given ID!!!");
+    if(uni_table.size() > f)
+        return uni_table[f].low;
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
         
         
 }
 
 BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
 {
-if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
-        return f;
-if(topVar(f) == x)
-    return uni_table[f].high;
-else {
-    BDD_ID    T = coFactorTrue(uni_table[f].high, x);
-    BDD_ID    F = coFactorTrue(uni_table[f].low, x);
-    return ite(uni_table[f].top_var, T, F);
-}
+    // if(uni_table.size() > f)
+    //     return 0;
+    // else
+    //     throw std::out_of_range("No existing entry for given ID!!!");
+// if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
+//         return f;
+// if(topVar(f) == x)
+//     return uni_table[f].high;
+// else {
+//     BDD_ID    T = coFactorTrue(uni_table[f].high, x);
+//     BDD_ID    F = coFactorTrue(uni_table[f].low, x);
+//     return ite(uni_table[f].top_var, T, F);
+//}
 }
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
