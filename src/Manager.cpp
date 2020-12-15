@@ -210,18 +210,8 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {   
-    if (isConstant(a)) {
-        if (a==0) return a;
-        else return b;
-    }
-    else if (isConstant(b)) {
-        if (b==0) return b;
-        else return a;
-    }
-    else {
     BDD_ID newID = ite(a,b,0);
     return newID;
-    }
 }
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
@@ -244,6 +234,7 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 
 BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
 {
+    //is it a problem to always create a neg(b)?
     BDD_ID newID = ite(a,neg(b),1); //Ite not working when call for functions (only for var/term)
     return newID;        
 }
@@ -253,18 +244,9 @@ BDD_ID Manager::neg(const BDD_ID a)
     BDD_ID newID = ite(a,0,1);
     return newID;
 }
+
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
-    // if(isConstant(a) && isConstant(b)){
-    //     if(a == b)
-    //         return 0;
-    //     else return 1;
-    // }
-    // else if (isConstant(a))
-    //     return b; 
-    // else if(a == b)
-    //     return 0;
-
     if(uni_table.size() >= a && uni_table.size() >= b){
         if(a == b)
             return 0;
