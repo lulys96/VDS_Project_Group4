@@ -175,10 +175,10 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f)
 
 BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
 {
-    // if(uni_table.size() > f)
-    //     return 0;
-    // else
-    //     throw std::out_of_range("No existing entry for given ID!!!");
+    if(uni_table.size() > f)
+        return 0;
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
 // if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
 //         return f;
 // if(topVar(f) == x)
