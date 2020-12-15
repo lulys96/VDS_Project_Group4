@@ -68,15 +68,18 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
     //If it is a terminal case, return the result
     if (isConstant(i)) {
-        if (i==1) { if (isConstant(t)) return t;}
-        else      { if (isConstant(e)) return e;}
+        if (i==1) return t;
+        else return e;
     }
+    //else if ... if t and e are equal return one of them
+    //if i is var, t is true and e false then return the var (i)
+
     //If there is an identical entry, return the id
-    for (auto& it : uni_table) {
-        if ((it.top_var == i) && (it.high == t) && (it.low == e) ) {
-            return it.id; 
-        }
-    }
+    // for (auto& it : uni_table) {
+    //     if ((it.top_var == i) && (it.high == t) && (it.low == e) ) { 
+    //         return it.id; 
+    //     }
+    // }
     //Find topVar
     BDD_ID topVariable = topVarFromSet (i,t,e);
     BDD_ID rhigh = ite(coFactorTrue(i,topVariable),
@@ -109,9 +112,9 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
     std::set<BDD_ID> nodes;
-    if (!isConstant(i)) nodes.insert(i);
-    if (!isConstant(t)) nodes.insert(t);
-    if (!isConstant(e)) nodes.insert(e);
+    if (!isConstant(i)) nodes.insert(topVar(i)); 
+    if (!isConstant(t)) nodes.insert(topVar(t));
+    if (!isConstant(e)) nodes.insert(topVar(e));
     BDD_ID topVariable = *nodes.begin();
 
     return topVariable;

@@ -143,24 +143,24 @@ TEST_F(ManagerTest, findNodes)
     BDD_ID idC = my_manager.createVar("c");
     BDD_ID idD = my_manager.createVar("d");
     BDD_ID andID1 = my_manager.ite (idA,idB,0);
-  //  BDD_ID andID2 = my_manager.ite (idC,andID1,0);
+    BDD_ID andID2 = my_manager.ite (idC,andID1,0);
 
     BDD_ID andID3= my_manager.ite (idA,idD,0);
 
-    // std::set<BDD_ID> nodes;
-    // my_manager.findNodes(andID2,nodes);
-    // const bool is_in = (nodes.find(0) != nodes.end()) &
-    //                    (nodes.find(1) != nodes.end()) &
-    //                    (nodes.find(idB) != nodes.end()) &
-    //                    (nodes.find(andID1) != nodes.end()) &
-    //                    (nodes.find(andID2) != nodes.end());
+    std::set<BDD_ID> nodes;
+    my_manager.findNodes(andID2,nodes);
+    const bool is_in = (nodes.find(0) != nodes.end()) &
+                       (nodes.find(1) != nodes.end()) &
+                       (nodes.find(idB) != nodes.end()) &
+                       (nodes.find(andID1) != nodes.end()) &
+                       (nodes.find(andID2) != nodes.end());
                        
-    // const bool not_in = (nodes.find(andID3) != nodes.end()) & // different operation
-    //                     (nodes.find(idA) != nodes.end()) & //top var, not high/low
-    //                     (nodes.find(idC) != nodes.end()) & //top var, not high/low
-    //                     (nodes.find(idD) != nodes.end()); //not related to andID2
-    // ASSERT_TRUE(is_in);
-    // ASSERT_FALSE(not_in);
+    const bool not_in = (nodes.find(andID3) != nodes.end()) & // different operation
+                        (nodes.find(idA) != nodes.end()) & //top var, not high/low
+                        (nodes.find(idC) != nodes.end()) & //top var, not high/low
+                        (nodes.find(idD) != nodes.end()); //not related to andID2
+    ASSERT_TRUE(is_in);
+    ASSERT_FALSE(not_in);
 }
 
 TEST_F(ManagerTest, or2_var)
