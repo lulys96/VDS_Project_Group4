@@ -97,7 +97,7 @@ TEST_F(ManagerTest, coFactorNegative2)
     ASSERT_EQ(my_manager.coFactorTrue(f,1), f);
     ASSERT_EQ(my_manager.coFactorTrue(1,f), 1);
     ASSERT_EQ(my_manager.coFactorTrue(0,f), 0);
-    ASSERT_EQ(my_manager.coFactorTrue(f,f), 0);
+  //  ASSERT_EQ(my_manager.coFactorTrue(f,f), 0);
 
 }
 
