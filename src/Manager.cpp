@@ -178,12 +178,11 @@ if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
         return f;
 if(topVar(f) == x)
     return uni_table[f].high;
-else
-    {
+else {
     BDD_ID    T = coFactorTrue(uni_table[f].high, x);
     BDD_ID    F = coFactorTrue(uni_table[f].low, x);
     return ite(uni_table[f].top_var, T, F);
-    }
+}
 }
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
