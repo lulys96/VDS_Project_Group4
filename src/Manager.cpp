@@ -250,6 +250,7 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
         if(a == b)
             return 0;
         else return 1;
-     
+    else if(a == b)
+        return a;
 
  }

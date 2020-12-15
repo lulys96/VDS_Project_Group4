@@ -163,6 +163,28 @@ TEST_F(ManagerTest, findNodes)
     // ASSERT_FALSE(not_in);
 }
 
+TEST_F(ManagerTest, or2_var)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID orID1 = my_manager.or2(0,idA);
+    BDD_ID orID2 = my_manager.or2(1,idA);
+    BDD_ID orID3 = my_manager.or2(idA,0);
+    BDD_ID orID4 = my_manager.or2(idA,1);
+    BDD_ID orID5 = my_manager.or2(idA,idA);
+    BDD_ID orID6 = my_manager.or2(idA,idB);
+    BDD_ID orID7 = my_manager.or2(idB,idA);
+
+
+
+    ASSERT_EQ(orID1, idA);
+    ASSERT_EQ(orID2, 1);
+    ASSERT_EQ(orID3, idA);
+    ASSERT_EQ(orID4, 1);
+    ASSERT_EQ(orID5, idA);
+    ASSERT_EQ(orID6, 4);
+    ASSERT_EQ(orID7, 4);
+}
 TEST_F(ManagerTest, or2_terminal)
 {
     BDD_ID orID1 = my_manager.or2(0,0);
@@ -195,29 +217,28 @@ TEST_F(ManagerTest, xor2_terminal)
 
 }
 
-TEST_F(ManagerTest, or2_var)
+TEST_F(ManagerTest, xor2_var)
 {
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
-    BDD_ID orID1 = my_manager.or2(0,idA);
-    BDD_ID orID2 = my_manager.or2(1,idA);
-    BDD_ID orID3 = my_manager.or2(idA,0);
-    BDD_ID orID4 = my_manager.or2(idA,1);
-    BDD_ID orID5 = my_manager.or2(idA,idA);
-    BDD_ID orID6 = my_manager.or2(idA,idB);
-    BDD_ID orID7 = my_manager.or2(idB,idA);
+    BDD_ID xorID1 = my_manager.xor2(idA,idA);
+    BDD_ID xorID2 = my_manager.xor2(0,idA);
+    BDD_ID xorID3 = my_manager.xor2(idA,0);
+    BDD_ID xorID4 = my_manager.xor2(idA,1);
+    BDD_ID xorID5 = my_manager.xor2(1,idA);
+    BDD_ID xorID6 = my_manager.xor2(idA,idB);
+    BDD_ID xorID7 = my_manager.xor2(idB,idA);
 
 
 
-    ASSERT_EQ(orID1, idA);
-    ASSERT_EQ(orID2, 1);
-    ASSERT_EQ(orID3, idA);
-    ASSERT_EQ(orID4, 1);
-    ASSERT_EQ(orID5, idA);
-    ASSERT_EQ(orID6, 4);
-    ASSERT_EQ(orID7, 4);
+    ASSERT_EQ(xorID1, idA);
+    //ASSERT_EQ(xorID2, 1);
+    //ASSERT_EQ(xorID3, idA);
+    //ASSERT_EQ(xorID4, 1);
+    //ASSERT_EQ(xorID5, idA);
+    //ASSERT_EQ(xorID6, 4);
+    //ASSERT_EQ(xorID7, 4);
 }
-
 
 TEST_F(ManagerTest, and2_terminals)
 {   
