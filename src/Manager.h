@@ -13,6 +13,7 @@
 #include <set>
 #include <string>
 #include <stdexcept>
+#include <algorithm> 
 #include "ManagerInterface.h"
 
 class ManagerTest;
@@ -63,6 +64,8 @@ class Manager : public ManagerInterface {
 
 	size_t uniqueTableSize() override;
 
+    BDD_ID topVarFromSet(const BDD_ID i, const BDD_ID t, const BDD_ID e);
+
     private:
     struct TableEntry {
         BDD_ID id;
@@ -73,6 +76,8 @@ class Manager : public ManagerInterface {
     };
 
     std::vector<TableEntry> uni_table;
+
+    
 };
 }
 #endif

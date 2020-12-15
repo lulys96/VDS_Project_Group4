@@ -157,10 +157,6 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_EQ(orID5, idA);
     ASSERT_EQ(orID6, 4);
   //  ASSERT_EQ(orID7, 4);
-
-
-
-
 }
 
 
@@ -195,6 +191,13 @@ TEST_F(ManagerTest, and2)
     ASSERT_TRUE(my_manager.topVar(andID)==2);
     ASSERT_TRUE(is_in);
 
+}
+
+TEST_F(ManagerTest, topVarFromSet)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID topVariable = my_manager.topVarFromSet(idB,1,idA);
 }
 
 
