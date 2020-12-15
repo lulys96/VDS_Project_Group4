@@ -198,15 +198,15 @@ BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
 
 BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 {
-if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
-    return f;
-if(topVar(f) == x)
-    return uni_table[f].low;
-else {
-    BDD_ID    T = coFactorFalse(uni_table[f].high, x);
-    BDD_ID    F = coFactorFalse(uni_table[f].low, x);
-    return ite(uni_table[f].top_var, T, F);
-}
+    if(isConstant(x) || isConstant(f) || topVar(f) > x)
+        return f;
+    if(topVar(f) == x)
+        return uni_table[f].low;
+    else {
+        BDD_ID    T = coFactorFalse(uni_table[f].high, x);
+        BDD_ID    F = coFactorFalse(uni_table[f].low, x);
+        return ite(uni_table[f].top_var, T, F);
+    }
 }
 
 
