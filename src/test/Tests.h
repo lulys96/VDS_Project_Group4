@@ -163,8 +163,26 @@ TEST_F(ManagerTest, findNodes)
     ASSERT_FALSE(not_in);
 }
 
+TEST_F(ManagerTest, or2_terminal)
+{
+    BDD_ID orID1 = my_manager.or2(0,0);
+    BDD_ID orID2 = my_manager.or2(1,1);
+    BDD_ID orID3 = my_manager.or2(1,0);
+    BDD_ID orID4 = my_manager.or2(0,1);    
+
+    ASSERT_TRUE(orID1 == 0);
+    ASSERT_TRUE(orID2 == 1); 
+    ASSERT_TRUE(orID3 == 1);
+    ASSERT_TRUE(orID4 == 1);
+}
+
 TEST_F(ManagerTest, or2_var)
 {
+    BDD_ID a=5, b=10;
+    ASSERT_THROW(my_manager.or2(a,1), std::out_of_range);
+    ASSERT_THROW(my_manager.or2(1,b), std::out_of_range);
+    ASSERT_THROW(my_manager.or2(a,b), std::out_of_range);
+
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID orID1 = my_manager.or2(0,idA);
@@ -183,18 +201,6 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_EQ(orID6, 4);
     ASSERT_EQ(orID7, 4);
 }
-TEST_F(ManagerTest, or2_terminal)
-{
-    BDD_ID orID1 = my_manager.or2(0,0);
-    BDD_ID orID2 = my_manager.or2(1,1);
-    BDD_ID orID3 = my_manager.or2(1,0);
-    BDD_ID orID4 = my_manager.or2(0,1);    
-
-    ASSERT_TRUE(orID1 == 0);
-    ASSERT_TRUE(orID2 == 1); 
-    ASSERT_TRUE(orID3 == 1);
-    ASSERT_TRUE(orID4 == 1);
-}
 
 TEST_F(ManagerTest, xor2_terminal)
 {
@@ -212,6 +218,11 @@ TEST_F(ManagerTest, xor2_terminal)
 
 TEST_F(ManagerTest, xor2_var)
 {
+    BDD_ID a=5, b=10;
+    ASSERT_THROW(my_manager.xor2(a,1), std::out_of_range);
+    ASSERT_THROW(my_manager.xor2(1,b), std::out_of_range);
+    ASSERT_THROW(my_manager.xor2(a,b), std::out_of_range);
+
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID xorID1 = my_manager.xor2(idA,idA);
@@ -250,6 +261,11 @@ TEST_F(ManagerTest, and2_terminals)
 
 TEST_F(ManagerTest, and2)
 {   
+    BDD_ID a=5, b=10;
+    ASSERT_THROW(my_manager.and2(a,1), std::out_of_range);
+    ASSERT_THROW(my_manager.and2(1,b), std::out_of_range);
+    ASSERT_THROW(my_manager.and2(a,b), std::out_of_range);
+
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID andID = my_manager.and2(idA,idB);
@@ -283,6 +299,11 @@ TEST_F(ManagerTest, nand2_terminals)
 
 TEST_F(ManagerTest, nand2)
 {   
+    BDD_ID a=5, b=10;
+    ASSERT_THROW(my_manager.nand2(a,1), std::out_of_range);
+    ASSERT_THROW(my_manager.nand2(1,b), std::out_of_range);
+    ASSERT_THROW(my_manager.nand2(a,b), std::out_of_range);
+
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID andID = my_manager.nand2(idA,idB);
@@ -311,6 +332,9 @@ TEST_F(ManagerTest, neg_terminal)
 
 TEST_F(ManagerTest, neg)
 {   
+    BDD_ID a=5;
+    ASSERT_THROW(my_manager.neg(a), std::out_of_range);
+
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID negA = my_manager.neg(idA);

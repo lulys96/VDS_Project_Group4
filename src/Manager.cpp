@@ -288,15 +288,6 @@ BDD_ID Manager::neg(const BDD_ID a)
 }
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
-    // if(isConstant(a) && isConstant(b)){
-    //     if(a == b)
-    //         return 0;
-    //     else return 1;
-    // }
-    // else if (isConstant(a))
-    //     return b; 
-    // else if(a == b)
-    //     return 0;
 
     if(uni_table.size() >= a && uni_table.size() >= b){
         if(a == b)
