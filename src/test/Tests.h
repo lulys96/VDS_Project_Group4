@@ -249,8 +249,13 @@ TEST_F(ManagerTest, xor2_var)
     ASSERT_EQ(xorID3, idA);
     ASSERT_EQ(xorID4, my_manager.neg(idA));
     ASSERT_EQ(xorID5, my_manager.neg(idB));
-    ASSERT_EQ(xorID6, 6);
-    ASSERT_EQ(xorID7, 6);
+    ASSERT_EQ(my_manager.coFactorTrue(xorID6), my_manager.neg(idB));
+    ASSERT_EQ(my_manager.coFactorFalse(xorID6), idB);
+
+    ASSERT_EQ(xorID6,6);
+    ASSERT_TRUE(xorID6==xorID7);
+    ASSERT_TRUE(my_manager.getTopVarName(xorID6)=="a");
+    ASSERT_TRUE(my_manager.topVar(xorID6)==2);
 }
 
 TEST_F(ManagerTest, and2_terminals)
