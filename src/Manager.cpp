@@ -148,11 +148,14 @@ BDD_ID Manager::createVar(const std::string &label)
     for (auto& it : uni_table) {
         if (it.label == label) return it.id;
     }
-    
-    BDD_ID varID = uniqueTableSize();
-    BDD_ID newID = ite(varID,1,0);
-    uni_table[newID].label = label;
-    return newID;
+    TableEntry new_node = TableEntry();
+    new_node.label = label; //no label yet
+    new_node.high = 1;
+    new_node.low = 0;
+    new_node.id = uniqueTableSize();
+    new_node.top_var = new_node.id;
+    uni_table.push_back(new_node);
+    return new_node.id;
 }
 
 BDD_ID Manager::coFactorTrue(const BDD_ID f)
@@ -198,15 +201,14 @@ BDD_ID Manager::coFactorTrue(const BDD_ID f, BDD_ID x)
 BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 {
 if(isConstant(x) || isConstant(f) || uni_table[f].top_var > x)
-        return f;
+    return f;
 if(topVar(f) == x)
     return uni_table[f].low;
-else
-    {
+else {
     BDD_ID    T = coFactorFalse(uni_table[f].high, x);
     BDD_ID    F = coFactorFalse(uni_table[f].low, x);
     return ite(uni_table[f].top_var, T, F);
-    }
+}
 }
 
 
