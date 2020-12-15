@@ -233,7 +233,7 @@ TEST_F(ManagerTest, xor2_var)
 
     ASSERT_EQ(xorID1, idA);
     ASSERT_EQ(xorID2, idA);
-    //ASSERT_EQ(xorID3, idA);
+    ASSERT_EQ(xorID3, idA);
     //ASSERT_EQ(xorID4, 1);
     //ASSERT_EQ(xorID5, idA);
     //ASSERT_EQ(xorID6, 4);
