@@ -118,7 +118,7 @@ TEST_F(ManagerTest, createVar)
 
 }
 
-TEST_F(ManagerTest, ite)
+TEST_F(ManagerTest, ite_terminal_var)
 {
     ASSERT_EQ(my_manager.ite (0,0,1),1);
     ASSERT_EQ(my_manager.ite (0,1,0),0);
@@ -127,6 +127,17 @@ TEST_F(ManagerTest, ite)
     BDD_ID idA = my_manager.createVar("a");
     ASSERT_EQ(my_manager.ite (idA,1,0),2);
 }
+
+TEST_F(ManagerTest, ite_cofactor)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idA = my_manager.createVar("b");
+    //And function
+    ASSERT_EQ(my_manager.ite (idA,0,idB),4);
+
+}
+
+
 
 TEST_F(ManagerTest, findNodes)
 {
