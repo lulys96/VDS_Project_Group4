@@ -185,7 +185,7 @@ TEST_F(ManagerTest, or2_terminal)
 
 TEST_F(ManagerTest, or2_var)
 {
-    BDD_ID a=5, b=10;
+    BDD_ID a=2, b=10;
     ASSERT_THROW(my_manager.or2(a,1), std::out_of_range);
     ASSERT_THROW(my_manager.or2(1,b), std::out_of_range);
     ASSERT_THROW(my_manager.or2(a,b), std::out_of_range);
@@ -380,7 +380,7 @@ TEST_F(ManagerTest, nor2_terminal)
 
 TEST_F(ManagerTest, nor2_var)
 {
-    BDD_ID a=5, b=10;
+    BDD_ID a=2, b=10;
     ASSERT_THROW(my_manager.nor2(a,1), std::out_of_range);
     ASSERT_THROW(my_manager.nor2(1,b), std::out_of_range);
     ASSERT_THROW(my_manager.nor2(a,b), std::out_of_range);
