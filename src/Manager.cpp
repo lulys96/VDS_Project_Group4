@@ -210,53 +210,59 @@ BDD_ID Manager::coFactorFalse(const BDD_ID f, BDD_ID x)
 
 BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 {   
-    if (isConstant(a)) {
-        if (a==0) return a;
-        else return b;
-    }
-    else if (isConstant(b)) {
-        if (b==0) return b;
-        else return a;
-    }
-    else {
-    BDD_ID newID = ite(a,b,0);
-    return newID;
-    }
+    if(uni_table.size() > a && uni_table.size() > b){
+        if (isConstant(a)) {
+            if (a==0) return a;
+            else return b;
+        }
+        else if (isConstant(b)) {
+            if (b==0) return b;
+            else return a;
+        }
+        else {
+            BDD_ID newID = ite(a,b,0);
+            return newID;
+        }
+    }    
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");    
 }
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 {
-    if(isConstant(a))
-        if(a == 1) 
-            return 1;
-        else 
-            return b;
-    else if(isConstant(b))
-            if(b == 1)
-                return 1;
-            else
-                return a;
-    else if(a == b)
-        return a;
+    if(uni_table.size() > a && uni_table.size() > b){
+        if(a == b)
+            return a;
+        else
+            return ite(a,1,b);
+    }
     else
-        return ite(a,1,b);          
+        throw std::out_of_range("No existing entry for given ID!!!");       
 }
 
 BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
 {
-    BDD_ID newID = ite(a,neg(b),1); //Ite not working when call for functions (only for var/term)
-    return newID;        
+    if(uni_table.size() > a && uni_table.size() > b){
+        BDD_ID newID = ite(a,neg(b),1); //Ite not working when call for functions (only for var/term)
+        return newID;
+    }
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");         
 }
 
 BDD_ID Manager::neg(const BDD_ID a)
 {
-    BDD_ID newID = ite(a,0,1);
-    return newID;
+    if(uni_table.size() > a){
+        BDD_ID newID = ite(a,0,1);
+        return newID;
+    }
+    else
+        throw std::out_of_range("No existing entry for given ID!!!");
 }
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
 
-    if(uni_table.size() >= a && uni_table.size() >= b){
+    if(uni_table.size() > a && uni_table.size() > b){
         if(a == b)
             return 0;
         else{
@@ -270,7 +276,7 @@ BDD_ID Manager::neg(const BDD_ID a)
 
 BDD_ID Manager::nor2(const BDD_ID a, const BDD_ID b)
 {
-    if(uni_table.size() >= a && uni_table.size() >= b){
+    if(uni_table.size() > a && uni_table.size() > b){
         BDD_ID newID = ite(a,0,neg(b));
         return newID;
     }
