@@ -246,7 +246,9 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
 
  BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
  {
-     
+     if(isConstant(a) && isConstant(b))
+        if(a == b)
+            return 0;
 
 
  }

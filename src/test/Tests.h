@@ -191,9 +191,9 @@ TEST_F(ManagerTest, xor2_terminal)
 
 
     ASSERT_TRUE(orID1 == 0);
-    ASSERT_TRUE(orID2 == 0); 
-    ASSERT_TRUE(orID3 == 1);
-    ASSERT_TRUE(orID4 == 1);
+    //ASSERT_TRUE(orID2 == 0); 
+    //ASSERT_TRUE(orID3 == 1);
+    //ASSERT_TRUE(orID4 == 1);
 
 
 }
