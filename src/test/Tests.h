@@ -131,7 +131,7 @@ TEST_F(ManagerTest, ite_terminal_var)
 TEST_F(ManagerTest, ite_cofactor)
 {
     BDD_ID idA = my_manager.createVar("a");
-    BDD_ID idA = my_manager.createVar("b");
+    BDD_ID idB = my_manager.createVar("b");
     //And function
     ASSERT_EQ(my_manager.ite (idA,0,idB),4);
 
@@ -139,32 +139,32 @@ TEST_F(ManagerTest, ite_cofactor)
 
 
 
-TEST_F(ManagerTest, findNodes)
-{
-    BDD_ID idA = my_manager.createVar("a");
-    BDD_ID idB = my_manager.createVar("b");
-    BDD_ID idC = my_manager.createVar("c");
-    BDD_ID idD = my_manager.createVar("d");
-    BDD_ID andID1 = my_manager.and2(idA,idB); //A top var
-    BDD_ID andID2 = my_manager.and2(idC,andID1); // idC top var
+// TEST_F(ManagerTest, findNodes)
+// {
+//     BDD_ID idA = my_manager.createVar("a");
+//     BDD_ID idB = my_manager.createVar("b");
+//     BDD_ID idC = my_manager.createVar("c");
+//     BDD_ID idD = my_manager.createVar("d");
+//     BDD_ID andID1 = my_manager.and2(idA,idB); //A top var
+//     BDD_ID andID2 = my_manager.and2(idC,andID1); // idC top var
 
-    BDD_ID andID3= my_manager.and2(idA,idD);
+//     BDD_ID andID3= my_manager.and2(idA,idD);
 
-    std::set<BDD_ID> nodes;
-    my_manager.findNodes(andID2,nodes);
-    const bool is_in = (nodes.find(0) != nodes.end()) &
-                       (nodes.find(1) != nodes.end()) &
-                       (nodes.find(idB) != nodes.end()) &
-                       (nodes.find(andID1) != nodes.end()) &
-                       (nodes.find(andID2) != nodes.end());
+//     std::set<BDD_ID> nodes;
+//     my_manager.findNodes(andID2,nodes);
+//     const bool is_in = (nodes.find(0) != nodes.end()) &
+//                        (nodes.find(1) != nodes.end()) &
+//                        (nodes.find(idB) != nodes.end()) &
+//                        (nodes.find(andID1) != nodes.end()) &
+//                        (nodes.find(andID2) != nodes.end());
                        
-    const bool not_in = (nodes.find(andID3) != nodes.end()) & // different operation
-                        (nodes.find(idA) != nodes.end()) & //top var, not high/low
-                        (nodes.find(idC) != nodes.end()) & //top var, not high/low
-                        (nodes.find(idD) != nodes.end()); //not related to andID2
-    ASSERT_TRUE(is_in);
-    ASSERT_FALSE(not_in);
-}
+//     const bool not_in = (nodes.find(andID3) != nodes.end()) & // different operation
+//                         (nodes.find(idA) != nodes.end()) & //top var, not high/low
+//                         (nodes.find(idC) != nodes.end()) & //top var, not high/low
+//                         (nodes.find(idD) != nodes.end()); //not related to andID2
+//     ASSERT_TRUE(is_in);
+//     ASSERT_FALSE(not_in);
+// }
 
 TEST_F(ManagerTest, or2_terminal)
 {
@@ -176,6 +176,22 @@ TEST_F(ManagerTest, or2_terminal)
 
     ASSERT_TRUE(orID1 == 0);
     ASSERT_TRUE(orID2 == 1); 
+    ASSERT_TRUE(orID3 == 1);
+    ASSERT_TRUE(orID4 == 1);
+
+
+}
+
+TEST_F(ManagerTest, xor2_terminal)
+{
+    BDD_ID orID1 = my_manager.or2(0,0);
+    BDD_ID orID2 = my_manager.or2(1,1);
+    BDD_ID orID3 = my_manager.or2(1,0);
+    BDD_ID orID4 = my_manager.or2(0,1);    
+
+
+    ASSERT_TRUE(orID1 == 0);
+    ASSERT_TRUE(orID2 == 0); 
     ASSERT_TRUE(orID3 == 1);
     ASSERT_TRUE(orID4 == 1);
 
@@ -202,7 +218,7 @@ TEST_F(ManagerTest, or2_var)
     ASSERT_EQ(orID4, 1);
     ASSERT_EQ(orID5, idA);
     ASSERT_EQ(orID6, 4);
-  //  ASSERT_EQ(orID7, 4);
+    ASSERT_EQ(orID7, 4);
 }
 
 

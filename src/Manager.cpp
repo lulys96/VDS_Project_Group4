@@ -244,3 +244,9 @@ BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
         return ite(a,1,b);          
 }
 
+ BDD_ID Manager::xor2(const BDD_ID a, const BDD_ID b)
+ {
+     
+
+
+ }
