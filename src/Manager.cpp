@@ -261,3 +261,24 @@ BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
     // BDD_ID newID = ite(a,not(b),1);
     // return newID;        
 }
+
+BDD_ID Manager::neg(const BDD_ID a)
+{
+    if (isConstant(a)) {
+        if (a==0) return 1;
+        else return 0;
+    }
+    for (auto& it : uni_table) {
+        if ((it.top_var == uni_table[a].top_var) && 
+            (it.high == uni_table[a].low) && 
+            (it.low == uni_table[a].high)) return it.id; 
+    }
+    TableEntry new_node = TableEntry();
+    new_node.label = "neg_"+uni_table[a].label; //no label yet
+    new_node.high = uni_table[a].low;
+    new_node.low = uni_table[a].high;
+    new_node.id = uniqueTableSize();
+    new_node.top_var = uni_table[a].top_var;
+    uni_table.push_back(new_node);
+    return new_node.id;
+}
