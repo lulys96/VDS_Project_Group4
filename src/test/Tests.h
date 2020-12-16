@@ -184,7 +184,7 @@ TEST_F(ManagerTest, findVars)
 {   
     //TODO find more cases to test
     BDD_ID idA = my_manager.createVar("a");
-    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID idB = my_manager.createVar("b"); // add test case where only var is tested, should only return the tested var
     BDD_ID idC = my_manager.createVar("c");
     BDD_ID idD = my_manager.createVar("d");
     BDD_ID andID1 = my_manager.ite (idA,idB,0);
