@@ -161,13 +161,13 @@ TEST_F(ManagerTest, findNodes)
                        (nodes.find(idC) != nodes.end()) & //high of id7
                        (nodes.find(andID2) != nodes.end());
                        
-    const bool not_in = (nodes.find(andID1) != nodes.end()) & // not added directly because it needs to be ordered
-                        (nodes.find(andID3) != nodes.end()) & // different operation
-                        (nodes.find(idA) != nodes.end()) & //top var of andID2 and and ID1
-                        (nodes.find(idB) != nodes.end()) & //top var of id7
+    const bool not_in = (nodes.find(andID1) != nodes.end()) || // not added directly because it needs to be ordered
+                        (nodes.find(andID3) != nodes.end()) || // different operation
+                        (nodes.find(idA) != nodes.end()) || //top var of andID2 and and ID1
+                        (nodes.find(idB) != nodes.end()) || //top var of id7
                         (nodes.find(idD) != nodes.end()); //not related to andID2
-    ASSERT_TRUE(is_in);
-    ASSERT_FALSE(not_in);
+    ASSERT_EQ(is_in,true);
+    ASSERT_EQ(not_in,false);
 }
 
 TEST_F(ManagerTest, findVars_terminal)
@@ -185,7 +185,7 @@ TEST_F(ManagerTest, findVars)
     //TODO find more cases to test
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b"); // add test case where only var is tested, should only return the tested var
-    BDD_ID idC = my_manager.createVar("c");
+    BDD_ID idC = my_manager.createVar("c"); 
     BDD_ID idD = my_manager.createVar("d");
     BDD_ID andID1 = my_manager.ite (idA,idB,0);
     BDD_ID andID2 = my_manager.ite (idC,andID1,0);
@@ -197,11 +197,13 @@ TEST_F(ManagerTest, findVars)
     const bool is_in = (vars.find(idA) != vars.end()) &  //top var of andID2
                        (vars.find(idB) != vars.end());  //top var of node ID7
                        
-    const bool not_in = (vars.find(andID1) != vars.end()) & 
-                        (vars.find(andID2) != vars.end()) & 
-                        (vars.find(idC) != vars.end()) & 
-                        (vars.find(idD) != vars.end()) & 
-                        (vars.find(7) != vars.end()); 
+    const bool not_in = (vars.find(andID1) != vars.end()) ||
+                        (vars.find(andID2) != vars.end()) || 
+                        (vars.find(idC) != vars.end()) ||
+                        (vars.find(idD) != vars.end()) ||
+                        (vars.find(0) != vars.end()) ||
+                        (vars.find(1) != vars.end()) ||
+                        (vars.find(7) != vars.end()); // check that terminal nodes are not included
     ASSERT_EQ(is_in,true);
     ASSERT_EQ(not_in,false);
 }
