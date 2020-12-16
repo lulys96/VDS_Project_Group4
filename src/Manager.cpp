@@ -140,7 +140,11 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
 {
-
+    std::set<BDD_ID> nodes_of_root;
+    findNodes(root,nodes_of_root);
+    for(auto it : nodes_of_root) {
+        vars_of_root.insert(topVar(it));
+    } 
 }
 
 BDD_ID Manager::createVar(const std::string &label)
