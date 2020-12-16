@@ -144,7 +144,7 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
     //exclude terminal nodes
     findNodes(root,nodes_of_root);
     for(auto it : nodes_of_root) {
-        vars_of_root.insert(topVar(it));
+        if (it>1) vars_of_root.insert(topVar(it));
     } 
 }
 

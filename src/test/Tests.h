@@ -174,11 +174,11 @@ TEST_F(ManagerTest, findVars_terminal)
 {
     std::set<BDD_ID> var_false;
     my_manager.findVars(0,var_false);
-    ASSERT_EQ((var_false.find(0) != var_false.end()),true);
+    ASSERT_EQ((var_false.find(0) != var_false.end()),false);
 
     std::set<BDD_ID> var_true;
     my_manager.findVars(1,var_true);
-    ASSERT_EQ((var_true.find(1) != var_true.end()),true);
+    ASSERT_EQ((var_true.find(1) != var_true.end()),false);
 }
 TEST_F(ManagerTest, findVars)
 {   
@@ -194,18 +194,17 @@ TEST_F(ManagerTest, findVars)
 
     std::set<BDD_ID> vars;
     my_manager.findVars(andID2,vars);
-    const bool is_in = (vars.find(idA) != vars.end()) &  //top var of andID2
-                       (vars.find(idB) != vars.end());  //top var of node ID7
-                       
-    const bool not_in = (vars.find(andID1) != vars.end()) ||
-                        (vars.find(andID2) != vars.end()) || 
-                        (vars.find(idC) != vars.end()) ||
-                        (vars.find(idD) != vars.end()) ||
-                        (vars.find(0) != vars.end()) ||
-                        (vars.find(1) != vars.end()) ||
-                        (vars.find(7) != vars.end()); // check that terminal nodes are not included
-    ASSERT_EQ(is_in,true);
-    ASSERT_EQ(not_in,false);
+    
+    ASSERT_EQ((vars.find(idA) != vars.end()),true);  
+    ASSERT_EQ((vars.find(idB) != vars.end()),true);  
+    ASSERT_EQ((vars.find(idC) != vars.end()),true);  
+
+    ASSERT_EQ((vars.find(andID1) != vars.end()),false);  
+    ASSERT_EQ((vars.find(andID2) != vars.end()),false);
+    ASSERT_EQ((vars.find(idD) != vars.end()),false);
+    ASSERT_EQ((vars.find(0) != vars.end()),false);
+    ASSERT_EQ((vars.find(1) != vars.end()),false);
+    ASSERT_EQ((vars.find(7) != vars.end()),false);
 }
 
 TEST_F(ManagerTest, or2_terminal)
