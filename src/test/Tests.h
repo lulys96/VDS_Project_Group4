@@ -155,19 +155,18 @@ TEST_F(ManagerTest, findNodes)
 
     std::set<BDD_ID> nodes;
     my_manager.findNodes(andID2,nodes);
-    const bool is_in = (nodes.find(0) != nodes.end()) &  //ok
-                       (nodes.find(7) != nodes.end()) &// ID=7,topVar=B,low=0,high=C (created to be andID2_high)
-                       (nodes.find(1) != nodes.end()) &
-                       (nodes.find(idC) != nodes.end()) & //high of id7
-                       (nodes.find(andID2) != nodes.end());
-                       
-    const bool not_in = (nodes.find(andID1) != nodes.end()) || // not added directly because it needs to be ordered
-                        (nodes.find(andID3) != nodes.end()) || // different operation
-                        (nodes.find(idA) != nodes.end()) || //top var of andID2 and and ID1
-                        (nodes.find(idB) != nodes.end()) || //top var of id7
-                        (nodes.find(idD) != nodes.end()); //not related to andID2
-    ASSERT_EQ(is_in,true);
-    ASSERT_EQ(not_in,false);
+
+    ASSERT_EQ((nodes.find(0) != nodes.end()),true);
+    ASSERT_EQ((nodes.find(1) != nodes.end()),true);
+    ASSERT_EQ((nodes.find(7) != nodes.end()),true); //ID=7,topVar=B,low=0,high=C (created to be andID2_high)
+    ASSERT_EQ((nodes.find(idC) != nodes.end()),true);  //high of id7
+    ASSERT_EQ((nodes.find(andID2) != nodes.end()),true);  
+
+    ASSERT_EQ((nodes.find(andID1) != nodes.end()),false); // not added directly because it needs to be ordered
+    ASSERT_EQ((nodes.find(andID3) != nodes.end()),false); // different operation
+    ASSERT_EQ((nodes.find(idA) != nodes.end()),false);  //top var of andID2 and and ID1
+    ASSERT_EQ((nodes.find(idB) != nodes.end()),false); //top var of id7
+    ASSERT_EQ((nodes.find(idD) != nodes.end()),false);  //not related to andID2
 }
 
 TEST_F(ManagerTest, findVars_terminal)
