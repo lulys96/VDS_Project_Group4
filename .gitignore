@@ -2,3 +2,4 @@ build/
 cmake-build-debug/
 .idea/
 workspace.code-workspace
+benchmarks/
