@@ -1,3 +1,10 @@
+/********************************************************************
+* \file Manager.cpp                                                            *
+*       Manager program written by Luiza Correa and Simon Loevald   *
+*       as a class project for the VDS-lecture WS20/21              *
+*       under supervision of Dipl.Ing. Tobias Ludwig                *
+*********************************************************************/                
+
 #include <cassert>
 #include "Manager.h"
 
@@ -5,8 +12,12 @@
 // mode: c++
 // End:
 
-using namespace ClassProject; 
-Manager::Manager()
+using namespace ClassProject;
+/// Manager().
+/** Constructor to create an object to use with the interface 
+ *
+*/
+Manager::Manager() 
 {
     //TableEntry new_node = TableEntry();
     uni_table.push_back(TableEntry()); //use push_back function
@@ -163,6 +174,10 @@ BDD_ID Manager::createVar(const std::string &label)
     return new_node.id;
 }
 
+/// coFactorTrue(const BDD_ID f).
+/** Takes a BDD_ID as input to return the BDD_ID 
+ * of the node that returns true seen from node f 
+*/
 BDD_ID Manager::coFactorTrue(const BDD_ID f)
 {
     if(uni_table.size() > f)

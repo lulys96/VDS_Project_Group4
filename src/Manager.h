@@ -1,6 +1,12 @@
 // A minimalistic BDD library, following Wolfgang Kunz lecture slides
 //
 // Written by Markus Wedler 2014
+/********************************************************************
+* \file Manager.h
+*       Manager program written by Luiza Correa and Simon Loevald   *
+*       as a class project for the VDS-lecture WS20/21              *
+*       under supervision of Dipl.Ing. Tobias Ludwig                *
+*********************************************************************/
 
 #ifndef mwBDD_H
 #define mwBDD_H
@@ -28,7 +34,7 @@ class Manager : public ManagerInterface {
 
     const BDD_ID &False() override;
 
-    bool isConstant(const BDD_ID f) override;
+    bool isConstant(const BDD_ID f) override; /** Checks if node passed as input is a constant or variable */
 
     bool isVariable(const BDD_ID x) override;
 

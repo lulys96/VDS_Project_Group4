@@ -3,3 +3,6 @@ cmake-build-debug/
 .idea/
 workspace.code-workspace
 benchmarks/
+src/verify/results_c3540
+doc/html
+doc/latex
