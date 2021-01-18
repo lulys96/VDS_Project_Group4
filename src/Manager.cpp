@@ -128,7 +128,7 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
     nodes_of_root.insert(uni_table[root].id);
     nodes_of_root.insert(uni_table[root].high);
     nodes_of_root.insert(uni_table[root].low);
-
+    //add current node, check if terminal, then add high and low if not.
     if (uni_table[root].high > 1) {
         findNodes(uni_table[root].high, nodes_of_root );
     }
@@ -141,9 +141,10 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
 {
     std::set<BDD_ID> nodes_of_root;
+    //exclude terminal nodes
     findNodes(root,nodes_of_root);
     for(auto it : nodes_of_root) {
-        vars_of_root.insert(topVar(it));
+        if (it>1) vars_of_root.insert(topVar(it));
     } 
 }
 

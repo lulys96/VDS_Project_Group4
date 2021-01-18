@@ -155,37 +155,36 @@ TEST_F(ManagerTest, findNodes)
 
     std::set<BDD_ID> nodes;
     my_manager.findNodes(andID2,nodes);
-    const bool is_in = (nodes.find(0) != nodes.end()) &  //ok
-                       (nodes.find(7) != nodes.end()) &// ID=7,topVar=B,low=0,high=C (created to be andID2_high)
-                       (nodes.find(1) != nodes.end()) &
-                       (nodes.find(idC) != nodes.end()) & //high of id7
-                       (nodes.find(andID2) != nodes.end());
-                       
-    const bool not_in = (nodes.find(andID1) != nodes.end()) & // not added directly because it needs to be ordered
-                        (nodes.find(andID3) != nodes.end()) & // different operation
-                        (nodes.find(idA) != nodes.end()) & //top var of andID2 and and ID1
-                        (nodes.find(idB) != nodes.end()) & //top var of id7
-                        (nodes.find(idD) != nodes.end()); //not related to andID2
-    ASSERT_TRUE(is_in);
-    ASSERT_FALSE(not_in);
+
+    ASSERT_EQ((nodes.find(0) != nodes.end()),true);
+    ASSERT_EQ((nodes.find(1) != nodes.end()),true);
+    ASSERT_EQ((nodes.find(7) != nodes.end()),true); //ID=7,topVar=B,low=0,high=C (created to be andID2_high)
+    ASSERT_EQ((nodes.find(idC) != nodes.end()),true);  //high of id7
+    ASSERT_EQ((nodes.find(andID2) != nodes.end()),true);  
+
+    ASSERT_EQ((nodes.find(andID1) != nodes.end()),false); // not added directly because it needs to be ordered
+    ASSERT_EQ((nodes.find(andID3) != nodes.end()),false); // different operation
+    ASSERT_EQ((nodes.find(idA) != nodes.end()),false);  //top var of andID2 and and ID1
+    ASSERT_EQ((nodes.find(idB) != nodes.end()),false); //top var of id7
+    ASSERT_EQ((nodes.find(idD) != nodes.end()),false);  //not related to andID2
 }
 
 TEST_F(ManagerTest, findVars_terminal)
 {
     std::set<BDD_ID> var_false;
     my_manager.findVars(0,var_false);
-    ASSERT_EQ((var_false.find(0) != var_false.end()),true);
+    ASSERT_EQ((var_false.find(0) != var_false.end()),false);
 
     std::set<BDD_ID> var_true;
     my_manager.findVars(1,var_true);
-    ASSERT_EQ((var_true.find(1) != var_true.end()),true);
+    ASSERT_EQ((var_true.find(1) != var_true.end()),false);
 }
 TEST_F(ManagerTest, findVars)
 {   
     //TODO find more cases to test
     BDD_ID idA = my_manager.createVar("a");
-    BDD_ID idB = my_manager.createVar("b");
-    BDD_ID idC = my_manager.createVar("c");
+    BDD_ID idB = my_manager.createVar("b"); // add test case where only var is tested, should only return the tested var
+    BDD_ID idC = my_manager.createVar("c"); 
     BDD_ID idD = my_manager.createVar("d");
     BDD_ID andID1 = my_manager.ite (idA,idB,0);
     BDD_ID andID2 = my_manager.ite (idC,andID1,0);
@@ -194,16 +193,17 @@ TEST_F(ManagerTest, findVars)
 
     std::set<BDD_ID> vars;
     my_manager.findVars(andID2,vars);
-    const bool is_in = (vars.find(idA) != vars.end()) &  //top var of andID2
-                       (vars.find(idB) != vars.end());  //top var of node ID7
-                       
-    const bool not_in = (vars.find(andID1) != vars.end()) & 
-                        (vars.find(andID2) != vars.end()) & 
-                        (vars.find(idC) != vars.end()) & 
-                        (vars.find(idD) != vars.end()) & 
-                        (vars.find(7) != vars.end()); 
-    ASSERT_EQ(is_in,true);
-    ASSERT_EQ(not_in,false);
+    
+    ASSERT_EQ((vars.find(idA) != vars.end()),true);  
+    ASSERT_EQ((vars.find(idB) != vars.end()),true);  
+    ASSERT_EQ((vars.find(idC) != vars.end()),true);  
+
+    ASSERT_EQ((vars.find(andID1) != vars.end()),false);  
+    ASSERT_EQ((vars.find(andID2) != vars.end()),false);
+    ASSERT_EQ((vars.find(idD) != vars.end()),false);
+    ASSERT_EQ((vars.find(0) != vars.end()),false);
+    ASSERT_EQ((vars.find(1) != vars.end()),false);
+    ASSERT_EQ((vars.find(7) != vars.end()),false);
 }
 
 TEST_F(ManagerTest, or2_terminal)
