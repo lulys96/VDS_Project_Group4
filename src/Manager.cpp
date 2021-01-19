@@ -1,9 +1,9 @@
-/********************************************************************
-* \file Manager.cpp                                                            *
-*       Manager program written by Luiza Correa and Simon Loevald   *
-*       as a class project for the VDS-lecture WS20/21              *
-*       under supervision of Dipl.Ing. Tobias Ludwig                *
-*********************************************************************/                
+/*********************************************************** 
+*   @file Manager.h
+* Manager program written by Luiza Correa and Simon Loevald   
+* as a class project for the VDS-lecture WS20/21              
+* under supervision of Dipl.Ing. Tobias Ludwig                
+***********************************************************/
 
 #include <cassert>
 #include "Manager.h"
@@ -13,10 +13,7 @@
 // End:
 
 using namespace ClassProject;
-/// Manager().
-/** Constructor to create an object to use with the interface 
- *
-*/
+
 Manager::Manager() 
 {
     //TableEntry new_node = TableEntry();
@@ -34,6 +31,8 @@ Manager::Manager()
     uni_table[1].top_var=1;
     uni_table[1].label="1";
 }
+
+
 
 bool Manager::isConstant(const BDD_ID f)
 {
@@ -77,7 +76,7 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
-    
+
     //If it is a terminal case, return the result 
     if (isConstant(i)) {
         if (i==1) return t;

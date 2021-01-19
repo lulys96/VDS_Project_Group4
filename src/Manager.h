@@ -1,12 +1,6 @@
-// A minimalistic BDD library, following Wolfgang Kunz lecture slides
-//
-// Written by Markus Wedler 2014
-/********************************************************************
-* \file Manager.h
-*       Manager program written by Luiza Correa and Simon Loevald   *
-*       as a class project for the VDS-lecture WS20/21              *
-*       under supervision of Dipl.Ing. Tobias Ludwig                *
-*********************************************************************/
+//// A minimalistic BDD library, following Wolfgang Kunz lecture slides
+////
+//// Written by Markus Wedler 2014
 
 #ifndef mwBDD_H
 #define mwBDD_H
@@ -27,10 +21,19 @@ class ManagerTest;
 namespace ClassProject {
 class Manager : public ManagerInterface {
     public:
-    Manager();
+    Manager(); /** Class constructer, initializes terminal nodes */
 
+/// BDD_ID createVar(const std::string &label)
+/** Creates a new variable in the OBDD 
+*   \param label std::string defining the name of the new variable
+*   \return Returns the BDD_ID of the new variable 
+******************************************************************/
     BDD_ID createVar(const std::string &label) override;
 
+/// BDD_ID &True()
+/** Creates a new variable in the OBDD 
+*   \return returns the BDD_ID of the terminal node true
+******************************************************************/
     const BDD_ID &True() override;
 
     const BDD_ID &False() override;
@@ -84,7 +87,7 @@ class Manager : public ManagerInterface {
 
     BDD_ID comp_table[3];
 
-    std::vector<TableEntry> uni_table;
+    std::vector<BDD_ID, TableEntry> uni_table;
 
     
 };
