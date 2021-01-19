@@ -77,6 +77,7 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {
+    
     //If it is a terminal case, return the result 
     if (isConstant(i)) {
         if (i==1) return t;
@@ -95,7 +96,7 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
                       coFactorFalse(e,topVariable));
     if (rhigh == rlow) return rhigh;
     else {
-    //Check if exists, return existent
+    //Check if exists, return existent -- switch to hashing 
          for (auto& it : uni_table) {
              if ((it.top_var == topVariable) && 
                  (it.high == rhigh) && (it.low == rlow)) return it.id; 

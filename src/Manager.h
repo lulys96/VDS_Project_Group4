@@ -21,6 +21,7 @@
 #include <stdexcept>
 #include <algorithm> 
 #include "ManagerInterface.h"
+#include <boost/functional/hash.hpp>
 
 class ManagerTest;
 namespace ClassProject {
@@ -80,6 +81,8 @@ class Manager : public ManagerInterface {
         BDD_ID top_var;
         std::string label;
     };
+
+    BDD_ID comp_table[3];
 
     std::vector<TableEntry> uni_table;
 

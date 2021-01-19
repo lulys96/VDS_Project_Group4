@@ -21,3 +21,7 @@ link_directories(${CMAKE_SOURCE_DIR}/src/bench/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/verify/)
 link_directories(${CMAKE_SOURCE_DIR}/src/verify/)
+
+#Boost
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+target_link_libraries(VDSProject ${Boost_LIBRARIES})
