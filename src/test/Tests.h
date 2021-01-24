@@ -22,9 +22,10 @@ TEST_F(ManagerTest, CtorTableSize)
 
 TEST_F(ManagerTest, isConstant) 
 {
+    BDD_ID idF = my_manager.createVar("x1");
     ASSERT_EQ(my_manager.isConstant(0), true);
     ASSERT_EQ(my_manager.isConstant(1), true);
-    ASSERT_EQ(my_manager.isConstant(2), false);
+    ASSERT_EQ(my_manager.isConstant(idF), false);
 }
 
 TEST_F(ManagerTest, isVariable)
