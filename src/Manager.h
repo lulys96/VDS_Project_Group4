@@ -44,7 +44,7 @@ class Manager : public ManagerInterface {
 
 /// isConstant(const BDD_ID f))
 /** Checks if node passed as input is a constant or variable
-*   \return returns true if the node is a constant
+*   \return returns true if the node is a terminal case
 ******************************************************************/
     bool isConstant(const BDD_ID f) override;
 
@@ -56,37 +56,37 @@ class Manager : public ManagerInterface {
 
 /// topVar(const BDD_ID f))
 /** Checks the BDD_ID of the top variable of the BDD_ID passed as input
-*   \return BDD_ID of topVar
+*   \return BDD_ID of the top variable
 ******************************************************************/
     BDD_ID topVar(const BDD_ID f) override;
 
 /// ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
-/** creates a new BDD_ID for the set i,t,e if not already present in unique table
+/** implements the i-t-e algorithm and creates a new BDD_ID for the set, if not already present in unique table
 *   \return BDD_ID of new node
 ******************************************************************/
     BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e) override;
 
 /// coFactorTrue(const BDD_ID f, BDD_ID x)
-/** Checks if node passed as input is a constant or variable
-*   \return
+/** Calculates the positive cofactor of a node with respect to x
+*   \return BDD_ID of the positive cofactor
 ******************************************************************/
     BDD_ID coFactorTrue(const BDD_ID f, BDD_ID x) override;
 
 /// coFactorFalse(const BDD_ID f, BDD_ID x)
-/** Checks if node passed as input is a constant or variable
-*   \return true if the node is a variable
+/** Calculates negative cofactor of a node with respect to x
+*   \return BDD_ID of the negative cofactor
 ******************************************************************/
     BDD_ID coFactorFalse(const BDD_ID f, BDD_ID x) override;
 
 /// coFactorTrue(const BDD_ID f)
-/** Checks if node passed as input is a constant or variable
-*   \return true if the node is a variable
+/** Calculates the positive cofactor of a node with respect to top variable
+*   \return BDD_ID of the negative cofactor
 ******************************************************************/
     BDD_ID coFactorTrue(const BDD_ID f) override;
 
 /// coFactorFalse(const BDD_ID f)
-/** Checks if node passed as input is a constant or variable
-*   \return true if the node is a variable
+/** Calculates the negative cofactor of a node with respect to top variable
+*   \return BDD_ID of the negative cofactor
 ******************************************************************/
     BDD_ID coFactorFalse(const BDD_ID f) override;
 
@@ -128,18 +128,18 @@ class Manager : public ManagerInterface {
 
 /// getTopVarName(const BDD_ID &root)
 /** Finds the top variable from the given root
-*   \return BDD_ID of the entry in the unique-table
+*   \return Name of the top variable
 ******************************************************************/
     std::string getTopVarName(const BDD_ID &root) override;
 
 /// findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
-/** finds all reachable nodes from the top variable and inserts into a set of BDD_IDs
+/** finds all reachable nodes from the root(including itself) and inserts into a set of BDD_IDs
 *   \return void
 ******************************************************************/
     void findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) override;
 
 /// findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
-/** finds all reachable nodes from the top variable and inserts into a set of BDD_IDs
+/** finds all reachable variables from the given root and inserts into a set of BDD_IDs
 *   \return void
 ******************************************************************/
     void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override;
