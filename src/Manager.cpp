@@ -86,6 +86,10 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
     else if ((i==t) && (e==0)) return i; //AND(A,A,0) = A
     else if ((i==e) && (t==1)) return i;//ite(A,1,A) = or(A,A) = A
     else if (t==0 && uni_table[i].high==0 && e==1 && uni_table[i].low==1 ) return topVar(i); //neg(neg(A))=A
+    else if (i==t) return ite(i,1,e);
+    else if (i==e) return ite(i,t,0);
+    //else if (e==neg(i)) return ite(i,t,1); //ite 2 3 0
+    //else if (t==neg(i)) return ite(i,0,e); 
     else {
         //Check if exists, return existent 
         key_type key = {i,t,e}; 
@@ -107,23 +111,10 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 
             BDD_ID R = find_or_add_uni_table(topVariable,rhigh,rlow);
             comp_table.insert(std::make_pair(key, R));
-            // if (t==1){ //ite(A,1,B) = ite (B,1,A)
-            //     key_type key1 = {e,t,i};
-            //     comp_table.insert(std::make_pair(key1, new_node.id));
-            // }
-            // else if (e==0) { //ite(a,b,0) =ite(b,a,0)
-            //     key_type key2 = {t,i,e};
-            //     comp_table.insert(std::make_pair(key2, new_node.id));
-            // }
-            // else if (t==neg(e)) {//ite(a,neg(b),b) = ite(b,neg(a),a);
-            //     key_type key3 = {e,neg(i),i};
-            //     comp_table.insert(std::make_pair(key3, new_node.id));
-            // }
             return R;
         }
     }
 }
-
 
 BDD_ID Manager::find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow)
 {
