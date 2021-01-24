@@ -95,20 +95,25 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
                       coFactorFalse(e,topVariable));
     if (rhigh == rlow) return rhigh;
     else {
-    //Check if exists, return existent -- switch to hashing 
-         for (auto& it : uni_table) {
-             if ((it.top_var == topVariable) && 
-                 (it.high == rhigh) && (it.low == rlow)) return it.id; 
-         }
-    //If doesn't exist, create a new one.
-        TableEntry new_node = TableEntry();
-        new_node.label = ""; //no label yet
-        new_node.high = rhigh;
-        new_node.low = rlow;
-        new_node.id = uniqueTableSize();
-        new_node.top_var = topVariable;
-        uni_table.push_back(new_node);
-        return new_node.id;
+        //Check if exists, return existent 
+        key_type key = {i,t,e}; 
+        auto search = comp_table.find(key);
+        if (search != comp_table.end()) {
+            return search->second;
+        }
+        else {
+        //If doesn't exist, create a new one.
+            TableEntry new_node = TableEntry();
+            new_node.label = ""; //no label yet
+            new_node.high = rhigh;
+            new_node.low = rlow;
+            new_node.id = uniqueTableSize();
+            new_node.top_var = topVariable;
+            uni_table.push_back(new_node);
+            BDD_ID id=new_node.id;
+            comp_table.insert(std::make_pair(key, new_node.id));
+            return new_node.id;
+        }
     }
 }
 

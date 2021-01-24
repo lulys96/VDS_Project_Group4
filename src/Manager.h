@@ -84,12 +84,11 @@ class Manager : public ManagerInterface {
         BDD_ID top_var;
         std::string label;
     };
-
-    BDD_ID comp_table[3];
-
-    std::vector<BDD_ID, TableEntry> uni_table;
-
-    
+   
+    typedef std::array<BDD_ID,3> key_type;
+    std::vector<TableEntry> uni_table;
+    std::unordered_map<key_type,BDD_ID,boost::hash<key_type>> comp_table;
+   
 };
 }
 #endif
