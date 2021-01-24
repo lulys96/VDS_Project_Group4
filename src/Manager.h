@@ -168,7 +168,8 @@ class Manager : public ManagerInterface {
     typedef std::array<BDD_ID,3> key_type;
     std::vector<TableEntry> uni_table;
     std::unordered_map<key_type,BDD_ID,boost::hash<key_type>> comp_table;
-   
+    
+    BDD_ID find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow);
 };
 }
 #endif

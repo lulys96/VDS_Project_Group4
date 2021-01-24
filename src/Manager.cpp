@@ -75,25 +75,16 @@ size_t Manager::uniqueTableSize()
 }
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
-{
-
+{  
     //If it is a terminal case, return the result 
     if (isConstant(i)) {
         if (i==1) return t;
         else return e;
     }
     else if (t==e) return t ;
-
-    //Find topVar
-    BDD_ID topVariable = topVarFromSet (i,t,e);
-    BDD_ID rhigh = ite(coFactorTrue(i,topVariable),
-                       coFactorTrue(t,topVariable),
-                       coFactorTrue(e,topVariable));
-    
-    BDD_ID rlow = ite(coFactorFalse(i,topVariable),
-                      coFactorFalse(t,topVariable),
-                      coFactorFalse(e,topVariable));
-    if (rhigh == rlow) return rhigh;
+    else if ((i==t) && (e==0)) return i; //AND(A,A,0) = A
+    else if ((i==e) && (t==1)) return i;//ite(A,1,A) = or(A,A) = A
+    else if (t==0 && uni_table[i].high==0 && e==1 && uni_table[i].low==1 ) return topVar(i); //neg(neg(A))=A
     else {
         //Check if exists, return existent 
         key_type key = {i,t,e}; 
@@ -102,19 +93,51 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
             return search->second;
         }
         else {
-        //If doesn't exist, create a new one.
-            TableEntry new_node = TableEntry();
-            new_node.label = ""; //no label yet
-            new_node.high = rhigh;
-            new_node.low = rlow;
-            new_node.id = uniqueTableSize();
-            new_node.top_var = topVariable;
-            uni_table.push_back(new_node);
-            BDD_ID id=new_node.id;
-            comp_table.insert(std::make_pair(key, new_node.id));
-            return new_node.id;
+            //Find topVar
+            BDD_ID topVariable = topVarFromSet (i,t,e);
+            BDD_ID rhigh = ite(coFactorTrue(i,topVariable),
+                       coFactorTrue(t,topVariable),
+                       coFactorTrue(e,topVariable));
+    
+            BDD_ID rlow = ite(coFactorFalse(i,topVariable),
+                      coFactorFalse(t,topVariable),
+                      coFactorFalse(e,topVariable));
+            if (rhigh == rlow) return rhigh;
+
+            BDD_ID R = find_or_add_uni_table(topVariable,rhigh,rlow);
+            comp_table.insert(std::make_pair(key, R));
+            // if (t==1){ //ite(A,1,B) = ite (B,1,A)
+            //     key_type key1 = {e,t,i};
+            //     comp_table.insert(std::make_pair(key1, new_node.id));
+            // }
+            // else if (e==0) { //ite(a,b,0) =ite(b,a,0)
+            //     key_type key2 = {t,i,e};
+            //     comp_table.insert(std::make_pair(key2, new_node.id));
+            // }
+            // else if (t==neg(e)) {//ite(a,neg(b),b) = ite(b,neg(a),a);
+            //     key_type key3 = {e,neg(i),i};
+            //     comp_table.insert(std::make_pair(key3, new_node.id));
+            // }
+            return R;
         }
     }
+}
+
+
+BDD_ID Manager::find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow)
+{
+    for (auto& it : uni_table) {
+        if ((it.top_var == topVariable) && 
+            (it.high == rhigh) && (it.low == rlow)) return it.id; 
+    } 
+    TableEntry new_node = TableEntry();
+    new_node.label = ""; //no label yet
+    new_node.high = rhigh;
+    new_node.low = rlow;
+    new_node.id = uniqueTableSize();
+    new_node.top_var = topVariable;
+    uni_table.push_back(new_node);
+    return new_node.id;
 }
 
 BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
@@ -251,7 +274,7 @@ BDD_ID Manager::and2(const BDD_ID a, const BDD_ID b)
 }
 
 BDD_ID Manager::or2(const BDD_ID a, const BDD_ID b)
-{
+{   
     if(uni_table.size() > a && uni_table.size() > b){
         if(a == b)
             return a;
@@ -266,7 +289,7 @@ BDD_ID Manager::nand2(const BDD_ID a, const BDD_ID b)
 {
     //is it a problem to always create a neg(b)?
     if(uni_table.size() > a && uni_table.size() > b){
-        BDD_ID newID = ite(a,neg(b),1); //Ite not working when call for functions (only for var/term)
+        BDD_ID newID = ite(a,neg(b),1); 
         return newID;
     }
     else

@@ -207,6 +207,38 @@ TEST_F(ManagerTest, findVars)
     ASSERT_EQ((vars.find(7) != vars.end()),false);
 }
 
+TEST_F(ManagerTest, neg_terminal)
+{   
+    BDD_ID negID1 = my_manager.neg(0);
+    BDD_ID negID2 = my_manager.neg(1);
+            
+    ASSERT_TRUE(negID1==1);  
+    ASSERT_TRUE(negID2==0);
+}
+
+TEST_F(ManagerTest, neg)
+{   
+    BDD_ID a=5;
+    ASSERT_THROW(my_manager.neg(a), std::out_of_range);
+
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID negA = my_manager.neg(idA);
+    BDD_ID negA2 = my_manager.neg(idA);
+    BDD_ID negB = my_manager.neg(idB);
+
+    ASSERT_EQ(negA2,negA);
+    ASSERT_NE(my_manager.neg(idA),idA);
+    ASSERT_EQ(my_manager.neg(negA),idA);
+
+    BDD_ID andID = my_manager.ite(idA,idB,0);
+    BDD_ID nandID = my_manager.neg(andID);
+
+    ASSERT_NE(nandID, andID);
+    ASSERT_EQ(my_manager.neg(nandID),andID);
+}
+
+
 TEST_F(ManagerTest, or2_terminal)
 {
     BDD_ID orID1 = my_manager.or2(0,0);
@@ -374,36 +406,6 @@ TEST_F(ManagerTest, nand2)
     //TODO: extend tests to work with nands of nands
 }
 
-TEST_F(ManagerTest, neg_terminal)
-{   
-    BDD_ID negID1 = my_manager.neg(0);
-    BDD_ID negID2 = my_manager.neg(1);
-            
-    ASSERT_TRUE(negID1==1);  
-    ASSERT_TRUE(negID2==0);
-}
-
-TEST_F(ManagerTest, neg)
-{   
-    BDD_ID a=5;
-    ASSERT_THROW(my_manager.neg(a), std::out_of_range);
-
-    BDD_ID idA = my_manager.createVar("a");
-    BDD_ID idB = my_manager.createVar("b");
-    BDD_ID negA = my_manager.neg(idA);
-    BDD_ID negA2 = my_manager.neg(idA);
-    BDD_ID negB = my_manager.neg(idB);
-
-    ASSERT_EQ(negA2,negA);
-    ASSERT_NE(my_manager.neg(idA),idA);
-    ASSERT_EQ(my_manager.neg(negA),idA);
-
-    BDD_ID andID = my_manager.ite(idA,idB,0);
-    BDD_ID nandID = my_manager.neg(andID);
-
-    ASSERT_NE(nandID, andID);
-    ASSERT_EQ(my_manager.neg(nandID),andID);
-}
 
 TEST_F(ManagerTest, nor2_terminal)
 {
