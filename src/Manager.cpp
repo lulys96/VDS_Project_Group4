@@ -176,6 +176,8 @@ BDD_ID Manager::createVar(const std::string &label)
     new_node.id = uniqueTableSize();
     new_node.top_var = new_node.id;
     uni_table.push_back(new_node);
+    key_type key = {new_node.id,1,0};
+    comp_table.insert(std::make_pair(key, new_node.id));
     return new_node.id;
 }
 
