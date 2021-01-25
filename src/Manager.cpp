@@ -117,10 +117,17 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 
 BDD_ID Manager::find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow)
 {
-    for (auto& it : uni_table) {
-        if ((it.top_var == topVariable) && 
-            (it.high == rhigh) && (it.low == rlow)) return it.id; 
-    } 
+
+    //Check if exists, return existent 
+    key_type key = {topVariable,rhigh,rlow}; 
+    auto search = rev_uni_table.find(key);
+    if (search != rev_uni_table.end()) {
+        return search->second;
+    }
+    // for (auto& it : uni_table) {
+    //     if ((it.top_var == topVariable) && 
+    //         (it.high == rhigh) && (it.low == rlow)) return it.id; 
+    // } 
     TableEntry new_node = TableEntry();
     new_node.label = ""; //no label yet
     new_node.high = rhigh;
@@ -128,6 +135,7 @@ BDD_ID Manager::find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhi
     new_node.id = uniqueTableSize();
     new_node.top_var = topVariable;
     uni_table.push_back(new_node);
+    rev_uni_table.insert(std::make_pair(key, new_node.id));
     return new_node.id;
 }
 
@@ -192,13 +200,10 @@ BDD_ID Manager::createVar(const std::string &label)
     uni_table.push_back(new_node);
     key_type key = {new_node.id,1,0};
     comp_table.insert(std::make_pair(key, new_node.id));
+    rev_uni_table.insert(std::make_pair(key, new_node.id));
     return new_node.id;
 }
 
-/// coFactorTrue(const BDD_ID f).
-/** Takes a BDD_ID as input to return the BDD_ID 
- * of the node that returns true seen from node f 
-*/
 BDD_ID Manager::coFactorTrue(const BDD_ID f)
 {
     if(uni_table.size() > f)
