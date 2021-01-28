@@ -488,8 +488,15 @@ TEST_F(ManagerTest, deMorgan)
     BDD_ID or2 = my_manager.or2(negIdA,negIdB);
     BDD_ID nand2 = my_manager.nand2(idA,idB);
 
+    BDD_ID nor2 = my_manager.nor2(idB, idA);
+    BDD_ID and2 = my_manager.and2(negIdB, negIdA);
+
+
+
     ASSERT_EQ(or2,nand2);
+    ASSERT_EQ(nor2,and2);
     ASSERT_EQ(my_manager.topVar(nand2),idA);
+    ASSERT_EQ(my_manager.topVar(and2),idA);
 
 }
 
