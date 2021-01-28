@@ -80,7 +80,7 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
     BDD_ID term_ID = terminalCaseSolver(i,t,e,is_terminal);
     if (is_terminal) return term_ID; 
     else if (i==t) return ite(i,1,e);
-    else if (i==e) return ite(i,t,0);    
+    else if (i==e) return ite(i,t,0);
     else {
         //Check if exists, return existent 
         key_type key = {i,t,e}; 
@@ -147,15 +147,17 @@ BDD_ID Manager::findOrAddUniTable(const BDD_ID topVariable, const BDD_ID rhigh, 
     return new_node.id;
 }
 
-BDD_ID Manager::topVarFromSet (const BDD_ID i, const BDD_ID t, const BDD_ID e)
+BDD_ID Manager::topVarFromSet (const BDD_ID i,const BDD_ID t,const BDD_ID e)
 {
-    std::set<BDD_ID> nodes;
-    if (!isConstant(i)) nodes.insert(topVar(i)); 
-    if (!isConstant(t)) nodes.insert(topVar(t));
-    if (!isConstant(e)) nodes.insert(topVar(e));
-    BDD_ID topVariable = *nodes.begin();
+     std::set<BDD_ID> nodes;
+     if (!isConstant(i)) nodes.insert(topVar(i));
+     if (!isConstant(t)) nodes.insert(topVar(t));
+     if (!isConstant(e)) nodes.insert(topVar(e));
+     BDD_ID topVariable = *nodes.begin();
 
-    return topVariable;
+     return topVariable;
+
+
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root)
