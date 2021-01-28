@@ -78,7 +78,9 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {  
     bool is_terminal;
     BDD_ID term_ID = terminalCaseSolver(i,t,e,is_terminal);
-    if (is_terminal) return term_ID;    
+    if (is_terminal) return term_ID; 
+    else if (i==t) return ite(i,1,e);
+    else if (i==e) return ite(i,t,0);    
     else {
         //Check if exists, return existent 
         key_type key = {i,t,e}; 
@@ -119,8 +121,6 @@ BDD_ID Manager::terminalCaseSolver(const BDD_ID i, const BDD_ID t,
     else if ((i==e) && (t==1)) return i;//ite(A,1,A) = or(A,A) = A
     else if (t==0 && uni_table[i].high==0 && e==1 && uni_table[i].low==1) 
         return topVar(i); //neg(neg(A))=A 
-    else if (i==t) return ite(i,1,e);
-    else if (i==e) return ite(i,t,0); 
     else {
         is_terminal = false;
         return 0;
@@ -136,10 +136,6 @@ BDD_ID Manager::findOrAddUniTable(const BDD_ID topVariable, const BDD_ID rhigh, 
     if (search != rev_uni_table.end()) {
         return search->second;
     }
-    // for (auto& it : uni_table) {
-    //     if ((it.top_var == topVariable) && 
-    //         (it.high == rhigh) && (it.low == rlow)) return it.id; 
-    // } 
     TableEntry new_node = TableEntry();
     new_node.label = ""; //no label yet
     new_node.high = rhigh;
