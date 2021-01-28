@@ -171,7 +171,8 @@ class Manager : public ManagerInterface {
 
     std::unordered_map<key_type,BDD_ID,boost::hash<key_type>> comp_table;
     
-    BDD_ID find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow);
+    BDD_ID findOrAddUniTable(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow);
+    BDD_ID terminalCaseSolver(const BDD_ID i, const BDD_ID t, const BDD_ID e, bool &is_terminal);
 
 };
 }
