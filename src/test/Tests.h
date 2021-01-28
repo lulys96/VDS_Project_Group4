@@ -500,6 +500,30 @@ TEST_F(ManagerTest, deMorgan)
 
 }
 
+TEST_F (ManagerTest,deMorgan2)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID idC = my_manager.createVar("c");
+    BDD_ID idD = my_manager.createVar("d");
+
+    BDD_ID negIdA = my_manager.neg(idA);
+    BDD_ID negIdB = my_manager.neg(idB);
+    BDD_ID negIdC = my_manager.neg(idC);
+    BDD_ID negIdD = my_manager.neg(idD);
+
+    BDD_ID or_negA_C = my_manager.or2(negIdA,idC);
+    BDD_ID or_B_negD = my_manager.or2(idB,negIdD);
+    BDD_ID left = my_manager.nand2(or_negA_C,or_B_negD);
+
+    BDD_ID and_A_negC = my_manager.and2(idA,negIdC);
+    BDD_ID and_negB_D = my_manager.and2(negIdB,idD);
+    BDD_ID right = my_manager.or2(and_A_negC,and_negB_D);
+
+    ASSERT_EQ(left,right);
+    
+}
+
 
 #endif //VDS_PROJECT_TESTS_H
 
