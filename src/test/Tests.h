@@ -99,7 +99,6 @@ TEST_F(ManagerTest, coFactorNegative2)
     ASSERT_EQ(my_manager.coFactorFalse(1,f), 1);
     ASSERT_EQ(my_manager.coFactorFalse(0,f), 0);
     ASSERT_EQ(my_manager.coFactorFalse(f,f), 0);
-
 }
 
 TEST_F(ManagerTest, createVar) 
@@ -459,7 +458,35 @@ TEST_F(ManagerTest, topVarFromSet)
 {
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
+    BDD_ID idC = my_manager.createVar("c");
     BDD_ID topVariable = my_manager.topVarFromSet(idB,1,idA);
+    BDD_ID topVariable1 = my_manager.topVarFromSet(1,idB,idA);
+    BDD_ID topVariable2 = my_manager.topVarFromSet(idA,1,idB);
+    BDD_ID topVariable3 = my_manager.topVarFromSet(idC,idA,idB);
+
+    ASSERT_EQ(topVariable, idA);
+    ASSERT_EQ(topVariable1, idA);
+    ASSERT_EQ(topVariable2, idA);
+    ASSERT_EQ(topVariable3, idA);
+
+}
+
+TEST_F(ManagerTest, deMorgan)
+{
+    BDD_ID idA = my_manager.createVar("a");
+    BDD_ID idB = my_manager.createVar("b");
+    BDD_ID idC = my_manager.createVar("c");
+
+    BDD_ID negIdA = my_manager.neg(idA);
+    BDD_ID negIdB = my_manager.neg(idB);
+
+
+    BDD_ID or2 = my_manager.or2(negIdA,negIdB);
+    BDD_ID nand2 = my_manager.nand2(idA,idB);
+
+    ASSERT_EQ(or2,nand2);
+    ASSERT_EQ(my_manager.topVar(nand2),idA);
+
 }
 
 
