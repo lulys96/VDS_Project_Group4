@@ -463,15 +463,22 @@ TEST_F(ManagerTest, topVarFromSet)
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID idC = my_manager.createVar("c");
+    BDD_ID idD = my_manager.createVar("d");
+    BDD_ID idAnd = my_manager.and2(idD,idB);
+    BDD_ID idAnd2 = my_manager.and2(idB,idC);
+
     BDD_ID topVariable = my_manager.topVarFromSet(idB,1,idA);
     BDD_ID topVariable1 = my_manager.topVarFromSet(1,idB,idA);
     BDD_ID topVariable2 = my_manager.topVarFromSet(idA,1,idB);
     BDD_ID topVariable3 = my_manager.topVarFromSet(idC,idA,idB);
+    BDD_ID topVariable4 = my_manager.topVarFromSet(idAnd,idAnd2,idD);
+
 
     ASSERT_EQ(topVariable, idA);
     ASSERT_EQ(topVariable1, idA);
     ASSERT_EQ(topVariable2, idA);
     ASSERT_EQ(topVariable3, idA);
+    ASSERT_EQ(topVariable4, idB);
 
 }
 
@@ -481,6 +488,7 @@ TEST_F(ManagerTest, deMorgan)
     BDD_ID idB = my_manager.createVar("b");
     BDD_ID idC = my_manager.createVar("c");
 
+    
     BDD_ID negIdA = my_manager.neg(idA);
     BDD_ID negIdB = my_manager.neg(idB);
 
@@ -490,13 +498,17 @@ TEST_F(ManagerTest, deMorgan)
 
     BDD_ID nor2 = my_manager.nor2(idB, idA);
     BDD_ID and2 = my_manager.and2(negIdB, negIdA);
+    BDD_ID idF = my_manager.and2(and2, nor2);
 
-
+    BDD_ID topVariable = my_manager.topVarFromSet(or2,nor2,idA);
+    BDD_ID topVariable2 = my_manager.topVarFromSet(or2,idF,nor2);
 
     ASSERT_EQ(or2,nand2);
     ASSERT_EQ(nor2,and2);
     ASSERT_EQ(my_manager.topVar(nand2),idA);
     ASSERT_EQ(my_manager.topVar(and2),idA);
+    ASSERT_EQ(topVariable, idA);
+    ASSERT_EQ(topVariable2, idA);
 
 }
 
