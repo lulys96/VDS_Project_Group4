@@ -76,19 +76,11 @@ size_t Manager::uniqueTableSize()
 
 BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
 {  
-    //If it is a terminal case, return the result 
-    if (isConstant(i)) {
-        if (i==1) return t;
-        else return e;
-    }
-    else if (t==e) return t ;
-    else if ((i==t) && (e==0)) return i; //AND(A,A,0) = A
-    else if ((i==e) && (t==1)) return i;//ite(A,1,A) = or(A,A) = A
-    else if (t==0 && uni_table[i].high==0 && e==1 && uni_table[i].low==1 ) return topVar(i); //neg(neg(A))=A
+    bool is_terminal;
+    BDD_ID term_ID = terminalCaseSolver(i,t,e,is_terminal);
+    if (is_terminal) return term_ID; 
     else if (i==t) return ite(i,1,e);
-    else if (i==e) return ite(i,t,0);
-    //else if (e==neg(i)) return ite(i,t,1); //ite 2 3 0
-    //else if (t==neg(i)) return ite(i,0,e); 
+    else if (i==e) return ite(i,t,0);    
     else {
         //Check if exists, return existent 
         key_type key = {i,t,e}; 
@@ -108,26 +100,42 @@ BDD_ID Manager::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e)
                       coFactorFalse(e,topVariable));
             if (rhigh == rlow) return rhigh;
 
-            BDD_ID R = find_or_add_uni_table(topVariable,rhigh,rlow);
+            BDD_ID R = findOrAddUniTable(topVariable,rhigh,rlow);
             comp_table.insert(std::make_pair(key, R));
             return R;
         }
     }
 }
 
-BDD_ID Manager::find_or_add_uni_table(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow)
+BDD_ID Manager::terminalCaseSolver(const BDD_ID i, const BDD_ID t,
+                                   const BDD_ID e, bool &is_terminal)
 {
+    is_terminal = true;
+    //If it is a terminal case, return the result 
+    if (isConstant(i)) {
+        if (i==1) return t;
+        else return e;
+    }
+    else if (t==e) return t ;
+    else if ((i==t) && (e==0)) return i; //AND(A,A,0) = A
+    else if ((i==e) && (t==1)) return i;//ite(A,1,A) = or(A,A) = A
+    else if (t==0 && uni_table[i].high==0 && e==1 && uni_table[i].low==1) 
+        return topVar(i); //neg(neg(A))=A 
+    else {
+        is_terminal = false;
+        return 0;
+    }
+}
 
+
+BDD_ID Manager::findOrAddUniTable(const BDD_ID topVariable, const BDD_ID rhigh, const BDD_ID rlow)
+{
     //Check if exists, return existent 
     key_type key = {topVariable,rhigh,rlow}; 
     auto search = rev_uni_table.find(key);
     if (search != rev_uni_table.end()) {
         return search->second;
     }
-    // for (auto& it : uni_table) {
-    //     if ((it.top_var == topVariable) && 
-    //         (it.high == rhigh) && (it.low == rlow)) return it.id; 
-    // } 
     TableEntry new_node = TableEntry();
     new_node.label = ""; //no label yet
     new_node.high = rhigh;

@@ -139,7 +139,11 @@ TEST_F(ManagerTest, ite_cofactor)
     BDD_ID idA = my_manager.createVar("a");
     BDD_ID idB = my_manager.createVar("b");
     //And function
-    ASSERT_EQ(my_manager.ite (idA,idB,0),4);
+    BDD_ID ID_AND_A_B = my_manager.ite (idA,idB,my_manager.False()); 
+    ASSERT_EQ(ID_AND_A_B,4); //only checks if creates the id, might not be sufficient 
+    ASSERT_EQ(my_manager.topVar(ID_AND_A_B),idA);
+    ASSERT_EQ(my_manager.coFactorFalse(ID_AND_A_B),my_manager.False());
+    ASSERT_EQ(my_manager.coFactorTrue(ID_AND_A_B),idB);
 }
 
 TEST_F(ManagerTest, findNodes)
