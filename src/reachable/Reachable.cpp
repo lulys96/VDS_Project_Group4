@@ -4,3 +4,7 @@
 
 #include "Reachable.h"
 
+// const std::vector<BDD_ID>& Reachable::getStates() const
+// {
+
+// }
