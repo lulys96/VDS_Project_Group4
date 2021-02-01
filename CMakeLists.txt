@@ -25,6 +25,9 @@ link_directories(${CMAKE_SOURCE_DIR}/src/reachable/)
 include_directories(${CMAKE_SOURCE_DIR}/src/verify/)
 link_directories(${CMAKE_SOURCE_DIR}/src/verify/)
 
+include_directories(${CMAKE_SOURCE_DIR}/src/reachable/)
+link_directories(${CMAKE_SOURCE_DIR}/src/reachable/)
+
 #Boost
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 target_link_libraries(VDSProject ${Boost_LIBRARIES})
