@@ -19,9 +19,9 @@ TEST(managerTest, getState) {
     auto s0 = states.at(0);
     auto s1 = states.at(1);
     auto s2 = states.at(2);
-    ASSERT_EQ(s0,0);
-    ASSERT_EQ(s1,1);
-    ASSERT_EQ(s2,2);
+    ASSERT_EQ(s0,comp.False());
+    ASSERT_EQ(s1,comp.False());
+    ASSERT_EQ(s2,comp.False());
 }
 
 TEST(managerTest, xnor_terminal) {

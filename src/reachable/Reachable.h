@@ -33,7 +33,7 @@ class Reachable : public ReachableInterface {
          * The next state is defined as XOR of the current values of the state bit s0 and s1
          * @param transitionFunctions provide a transition function exactly for each state bit
          */
-        void setDelta(const std::vector<BDD_ID> &transitionFunctions) override {}
+        void setDelta(const std::vector<BDD_ID> &transitionFunctions) override;
 
         /**
          * Each state machine has an inital state. The inital state is provided as a vector.
