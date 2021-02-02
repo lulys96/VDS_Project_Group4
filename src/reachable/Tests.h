@@ -52,14 +52,14 @@ TEST(managerTest, xor2_var)
     BDD_ID xorID1 = comp.xnor2(idA,idA);
     ASSERT_EQ(comp.uniqueTableSize(), 4);
 
-    BDD_ID xorID2 = comp.xor2(0,idB);
+    BDD_ID xorID2 = comp.xnor2(0,idB);
     ASSERT_EQ(comp.uniqueTableSize(), 5);
 
-    BDD_ID xorID3 = comp.xor2(idA,0);
-    BDD_ID xorID4 = comp.xor2(idA,1);
-    BDD_ID xorID5 = comp.xor2(1,idB);
-    BDD_ID xorID6 = comp.xor2(idA,idB);
-    BDD_ID xorID7 = comp.xor2(idB,idA);
+    BDD_ID xorID3 = comp.xnor2(idA,0);
+    BDD_ID xorID4 = comp.xnor2(idA,1);
+    BDD_ID xorID5 = comp.xnor2(1,idB);
+    BDD_ID xorID6 = comp.xnor2(idA,idB);
+    BDD_ID xorID7 = comp.xnor2(idB,idA);
 
     //00/11 -> true     01/10 -> false
     ASSERT_EQ(xorID1, comp.True());
