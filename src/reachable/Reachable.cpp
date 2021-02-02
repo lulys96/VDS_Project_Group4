@@ -20,5 +20,14 @@ const std::vector<BDD_ID> &Reachable::getStates() const
 
 BDD_ID Reachable::xnor2(BDD_ID a, BDD_ID b) 
 {
-
+    // if(uniqueTableSize() > a && uniqueTableSize() > b){
+    //     if(a == b)
+    //         return 0;
+    //     else{
+    //         BDD_ID newID = ite(a,b,neg(b));
+    //         return newID;
+    //     }
+    // }
+    // else
+    //     throw std::out_of_range("No existing entry for given ID!!!");
 }
