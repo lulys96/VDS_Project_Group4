@@ -12,11 +12,11 @@
 namespace ClassProject {
 class Reachable : public ReachableInterface {
     public:
-        explicit Reachable(unsigned int stateSize) : ReachableInterface(stateSize) {}
+        explicit Reachable(unsigned int stateSize);
         ~Reachable() {}
 
          //! @return returns the XNOR of BDD IDs
-        BDD_ID xnor2(BDD_ID a, BDD_ID b) override {}
+        BDD_ID xnor2(BDD_ID a, BDD_ID b) override;
         /**
          * States are generated and stored in a vector.
          * These lsb (e.g. "s0")  is stored at location 0.
@@ -57,7 +57,8 @@ class Reachable : public ReachableInterface {
          * @return
          */
         bool is_reachable(const std::vector<bool>& stateVector) override {}
-
-    };
+    private:
+        std::vector<BDD_ID> states;
+};
 }
 #endif //VDSPROJECT_IMGCOMP_H

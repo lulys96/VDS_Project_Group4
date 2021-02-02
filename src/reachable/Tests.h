@@ -9,16 +9,33 @@
 #include "gtest/gtest.h"
 using namespace ClassProject;
 
+
+TEST(managerTest, ctor) {
+
+    ClassProject::Reachable comp(3);
+
+    auto states = comp.getStates();
+    std::vector<BDD_ID> functions;
+
+    auto s0 = states.at(0);
+    auto s1 = states.at(1);
+    auto s2 = states.at(2);
+    ASSERT_EQ(s0,0);
+    ASSERT_EQ(s1,1);
+    ASSERT_EQ(s2,2);
+}
+
+
 TEST(managerTest, HowTo_Example) {
 
     ClassProject::Reachable comp(2);
 
-    //auto states = comp.getStates();
-    // std::vector<BDD_ID> functions;
+    auto states = comp.getStates();
+    std::vector<BDD_ID> functions;
 
-    // auto s0 = states.at(0);
-    // auto s1 = states.at(1);
-    // //s0' = not(s0)
+    auto s0 = states.at(0);
+    auto s1 = states.at(1);
+    //s0' = not(s0)
     // functions.push_back(comp.neg(s0));
     // //s1' = not(s1)
     // functions.push_back(comp.neg(s0));
