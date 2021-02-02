@@ -8,9 +8,9 @@ using namespace ClassProject;
 Reachable::Reachable(unsigned int stateSize) :
 ReachableInterface(stateSize)
 {
-    // for (int i=0; i<stateSize; i++) {
-    //     states.push_back(i);
-    // }
+    for (int i=0; i<stateSize; i++) {
+        states.push_back(i);
+    }
 }
 
 const std::vector<BDD_ID> &Reachable::getStates() const
