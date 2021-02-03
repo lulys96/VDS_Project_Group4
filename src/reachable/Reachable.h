@@ -56,7 +56,7 @@ class Reachable : public ReachableInterface {
          * @param stateVector 
          * @return
          */
-        bool is_reachable(const std::vector<bool>& stateVector) override {}
+        bool is_reachable(const std::vector<bool>& stateVector) override;
     private:
         BDD_ID compute_transition_relation();
         BDD_ID compute_cs0();

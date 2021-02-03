@@ -53,7 +53,7 @@ TEST(managerTest, xnor_terminal) {
 TEST(managerTest, xor2_var)
 {
     ClassProject::Reachable comp(2);
-    BDD_ID a=5, b=10;
+    BDD_ID a=7, b=10;
     ASSERT_THROW(comp.xnor2(a,1), std::out_of_range);
     ASSERT_THROW(comp.xnor2(1,b), std::out_of_range);
     ASSERT_THROW(comp.xnor2(a,b), std::out_of_range);
@@ -107,6 +107,7 @@ TEST(managerTest, HowTo_Example) {
     //Add transition functions
     comp.setDelta(functions);
     //Add init state
+
     comp.setInitState({false,false});
 
     ASSERT_TRUE(comp.is_reachable({true,true}));

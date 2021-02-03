@@ -40,25 +40,25 @@ BDD_ID Reachable::xnor2(BDD_ID a, BDD_ID b)
 
 void Reachable::setDelta(const std::vector<BDD_ID> &transitionFunctions)
 {
-    if (sizeof(transitionFunctions) == sizeof(states)) {
-        for (int i=0; i<sizeof(states); i++) {
+    if (transitionFunctions.size() == states.size()) {
+        for (int i=0; i<states.size(); i++) {
             delta.push_back(transitionFunctions[i]); 
         }
     }
     else
-        throw std::out_of_range("transitionFunction size isn't correct!!!");
+        throw std::out_of_range("setDelta: transitionFunction size isn't correct!!!");
 }
 
 void Reachable::setInitState(const std::vector<bool>& stateVector)
 {
-    if (sizeof(stateVector) == sizeof(states)) {
-        for (int i=0; i<sizeof(states); i++) {
-            if (stateVector[i]) initState.push_back(states[i]); 
-            else initState.push_back(neg(states[i]));
-        }
+    if (stateVector.size() == states.size()) {
+       for (int i=0; i<states.size(); i++) {
+           if (stateVector[i]) initState.push_back(states[i]); 
+           else initState.push_back(neg(states[i]));
+       }
     }
     else
-        throw std::out_of_range("stateVector size isn't correct!!!");
+        throw std::out_of_range("setInitState: stateVector size isn't correct!!!");
 }
 
 BDD_ID Reachable::compute_reachable_states()
@@ -78,14 +78,29 @@ BDD_ID Reachable::compute_reachable_states()
     return c_R;
 }
 
+bool Reachable::is_reachable(const std::vector<bool>& stateVector)
+{   
+    BDD_ID reachables = compute_reachable_states();
+    BDD_ID next_id = reachables;
+    for (int i=0; i<states.size(); i++) {
+        if(stateVector[i]) next_id = coFactorTrue(next_id,states[i]);
+        else               next_id = coFactorFalse(next_id,states[i]); 
+    }
+    if (next_id==False()) return false;
+    else if (next_id==True())  return true;
+    else std::cout << "deu ruim";
+    return false;
+}
+
 BDD_ID Reachable::compute_transition_relation()
 {
     std::vector<BDD_ID> xnor_id; 
-    for (int i=0; i<sizeof(states); i++) {
+    xnor_id.resize(states.size());
+    for (int i=0; i<states.size(); i++) {
         xnor_id[i] = xnor2((next_states[i]),delta[i]);   
     }
     BDD_ID last_id = xnor_id[0];
-    for (int i=1; i<sizeof(states); i++) {
+    for (int i=1; i<states.size(); i++) {
         last_id = and2(last_id,xnor_id[i]);  
     }
     return last_id;
@@ -94,24 +109,40 @@ BDD_ID Reachable::compute_transition_relation()
 BDD_ID Reachable::compute_cs0()
 {
     BDD_ID last_id = initState[0];
-    for (int i=1; i<sizeof(states); i++) {
+    for (int i=1; i<states.size(); i++) {
         last_id = and2(last_id,initState[i]);   
     }
-    return last_id
+    return last_id;
 }
 
 BDD_ID Reachable::compute_existential_quantification_S(BDD_ID node)
 {
     BDD_ID exQuantS = or2(coFactorTrue(node,states[0]),
                           coFactorFalse(node,states[0])); //s0
-    for (int i=1; i<sizeof(states); i++) {
+    for (int i=1; i<states.size(); i++) {
         exQuantS = or2(coFactorTrue(exQuantS,states[i]),
                       coFactorFalse(exQuantS,states[i])); //s1
     }
-
+    return exQuantS;
 }
 
-BDD_ID Reachable::imgr_to_imgs(img_r)
+BDD_ID Reachable::imgr_to_imgs(BDD_ID img_r)
 {
-
+    std::vector<BDD_ID> xnor_id; 
+    xnor_id.resize(states.size());
+    for (int i=0; i<states.size(); i++) {
+        xnor_id[i] = xnor2(states[i],next_states[i]);   
+    }
+    BDD_ID temp1 = xnor_id[0];
+    for (int i=1; i<states.size(); i++) {
+        temp1 = and2(temp1,xnor_id[i]);  
+    }
+    BDD_ID temp2 = and2(temp1,img_r);
+    BDD_ID temp3 = or2(coFactorTrue(temp2, next_states[0]),
+                       coFactorFalse(temp2, next_states[0]));
+    for (int i=1; i<states.size(); i++) {
+        temp3 = or2(coFactorTrue(temp3, next_states[i]),
+                       coFactorFalse(temp3, next_states[i]));  
+    }
+    return temp3;
 }
