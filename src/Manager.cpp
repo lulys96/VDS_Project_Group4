@@ -22,14 +22,14 @@ Manager::Manager()
     uni_table[0].high=0;
     uni_table[0].low=0;
     uni_table[0].top_var=0;
-    uni_table[0].label="0";
+    uni_table[0].label="False_node";
 
     uni_table.push_back(TableEntry());
     uni_table[1].id=1;
     uni_table[1].high=1;
     uni_table[1].low=1;
     uni_table[1].top_var=1;
-    uni_table[1].label="1";
+    uni_table[1].label="True_node";
 }
 
 
@@ -201,6 +201,7 @@ BDD_ID Manager::createVar(const std::string &label)
     for (auto& it : uni_table) {
         if (it.label == label) return it.id;
     }
+    //TODO: check if is a var
     TableEntry new_node = TableEntry();
     new_node.label = label; //no label yet
     new_node.high = 1;

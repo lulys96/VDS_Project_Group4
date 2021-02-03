@@ -16,12 +16,23 @@ TEST(managerTest, getState) {
 
     auto states = comp.getStates();
 
-    auto s0 = states.at(0);
-    auto s1 = states.at(1);
-    auto s2 = states.at(2);
-    ASSERT_EQ(s0,comp.False());
-    ASSERT_EQ(s1,comp.False());
-    ASSERT_EQ(s2,comp.False());
+    BDD_ID s0 = states.at(0);
+    BDD_ID s1 = states.at(1);
+    BDD_ID s2 = states.at(2);
+    ASSERT_EQ(s0,2);
+    ASSERT_EQ(s1,3);
+    ASSERT_EQ(s2,4);
+
+    ASSERT_TRUE(comp.getTopVarName(s0)=="s0");
+    ASSERT_TRUE(comp.isVariable(s0));
+
+    ASSERT_TRUE(comp.getTopVarName(s1)=="s1");
+    ASSERT_TRUE(comp.isVariable(s1));
+
+    ASSERT_TRUE(comp.getTopVarName(s2)=="s2");
+    ASSERT_TRUE(comp.isVariable(s2));
+
+
 }
 
 TEST(managerTest, xnor_terminal) {
@@ -47,33 +58,38 @@ TEST(managerTest, xor2_var)
     ASSERT_THROW(comp.xnor2(1,b), std::out_of_range);
     ASSERT_THROW(comp.xnor2(a,b), std::out_of_range);
 
-    BDD_ID idA = comp.createVar("a");
-    BDD_ID idB = comp.createVar("b");
-    BDD_ID xorID1 = comp.xnor2(idA,idA);
-    ASSERT_EQ(comp.uniqueTableSize(), 4);
 
-    BDD_ID xorID2 = comp.xnor2(0,idB);
-    ASSERT_EQ(comp.uniqueTableSize(), 5);
+    auto states = comp.getStates();
 
-    BDD_ID xorID3 = comp.xnor2(idA,0);
-    BDD_ID xorID4 = comp.xnor2(idA,1);
-    BDD_ID xorID5 = comp.xnor2(1,idB);
-    BDD_ID xorID6 = comp.xnor2(idA,idB);
-    BDD_ID xorID7 = comp.xnor2(idB,idA);
+    BDD_ID s0 = states.at(0);
+    BDD_ID s1 = states.at(1);
+
+    BDD_ID xorID1 = comp.xnor2(s0,s0);
+    ASSERT_EQ(comp.uniqueTableSize(), 6);
+
+    BDD_ID xorID2 = comp.xnor2(0,s1);
+    ASSERT_EQ(comp.uniqueTableSize(), 7);
+
+    BDD_ID xorID3 = comp.xnor2(s0,0);
+    BDD_ID xorID4 = comp.xnor2(s0,1);
+    BDD_ID xorID5 = comp.xnor2(1,s1);
+    BDD_ID xorID6 = comp.xnor2(s0,s1);
+    BDD_ID xorID7 = comp.xnor2(s1,s0);
 
     //00/11 -> true     01/10 -> false
     ASSERT_EQ(xorID1, comp.True());
-    ASSERT_EQ(xorID2, comp.neg(idB));
-    ASSERT_EQ(xorID3, comp.neg(idA));
-    ASSERT_EQ(xorID4, idA);
-    ASSERT_EQ(xorID5, idB);
-    ASSERT_EQ(comp.coFactorTrue(xorID6), idB);
-    ASSERT_EQ(comp.coFactorFalse(xorID6), comp.neg(idB));
+    ASSERT_EQ(xorID2, comp.neg(s1));
+    ASSERT_EQ(xorID3, comp.neg(s0));
+    ASSERT_EQ(xorID4, s0);
+    ASSERT_EQ(xorID5, s1);
+    ASSERT_EQ(comp.coFactorTrue(xorID6), s1);
+    ASSERT_EQ(comp.coFactorFalse(xorID6), comp.neg(s1));
 
     ASSERT_TRUE(xorID6==xorID7);
-    ASSERT_TRUE(comp.getTopVarName(xorID6)=="a");
-    ASSERT_TRUE(comp.topVar(xorID6)==idA);
+    ASSERT_TRUE(comp.getTopVarName(xorID6)=="s0");
+    ASSERT_TRUE(comp.topVar(xorID6)==s0);
 }
+
 
 TEST(managerTest, HowTo_Example) {
 
@@ -85,18 +101,18 @@ TEST(managerTest, HowTo_Example) {
     auto s0 = states.at(0);
     auto s1 = states.at(1);
     //s0' = not(s0)
-    // functions.push_back(comp.neg(s0));
-    // //s1' = not(s1)
-    // functions.push_back(comp.neg(s0));
-    // //Add transition functions
-    // comp.setDelta(functions);
-    // //Add init state
-    // comp.setInitState({false,false});
+    functions.push_back(comp.neg(s0));
+    //s1' = not(s1)
+    functions.push_back(comp.neg(s0));
+    //Add transition functions
+    comp.setDelta(functions);
+    //Add init state
+    comp.setInitState({false,false});
 
-    // ASSERT_TRUE(comp.is_reachable({true,true}));
-    // ASSERT_TRUE(comp.is_reachable({false,false}));
-    // ASSERT_FALSE(comp.is_reachable({true,false}));
-    // ASSERT_FALSE(comp.is_reachable({false,true}));
+    ASSERT_TRUE(comp.is_reachable({true,true}));
+    ASSERT_TRUE(comp.is_reachable({false,false}));
+    ASSERT_FALSE(comp.is_reachable({true,false}));
+    ASSERT_FALSE(comp.is_reachable({false,true}));
 
 }
 

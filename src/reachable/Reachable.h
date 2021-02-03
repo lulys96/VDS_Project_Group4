@@ -41,14 +41,14 @@ class Reachable : public ReachableInterface {
          * otherwhise negated. E.g. initial state not(s0) and not(s1) is transformed into {false,false}.
          * @param stateVector provide the assignemtn for each state bit
          */
-        void setInitState(const std::vector<bool>& stateVector) override {}
+        void setInitState(const std::vector<bool>& stateVector) override;
 
         /**
          * Computes the symbolic representation of the reachable states.
          * Before this method is called it is important to set the transition function and the initial state.
          * @return BDD_ID of the reachable state space
          */
-        BDD_ID compute_reachable_states() override {}
+        BDD_ID compute_reachable_states() override;
 
         /**
          * This method decides whether a specific state is in the reachable state space or not.
@@ -58,7 +58,16 @@ class Reachable : public ReachableInterface {
          */
         bool is_reachable(const std::vector<bool>& stateVector) override {}
     private:
+        BDD_ID compute_transition_relation();
+        BDD_ID compute_cs0();
+        BDD_ID compute_existential_quantification_S (BDD_ID node);
+        BDD_ID imgr_to_imgs(BDD_ID img_r);
+
         std::vector<BDD_ID> states;
+        std::vector<BDD_ID> next_states;
+        std::vector<BDD_ID> delta;
+        std::vector<BDD_ID> initState;
+        std::vector<std::vector<bool>> reachableStates;
 };
 }
 #endif //VDSPROJECT_IMGCOMP_H
