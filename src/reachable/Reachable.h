@@ -59,6 +59,7 @@ class Reachable : public ReachableInterface {
         bool is_reachable(const std::vector<bool>& stateVector) override {}
     private:
         std::vector<BDD_ID> states;
-};
+        unsigned int stateSize;
+    };
 }
 #endif //VDSPROJECT_IMGCOMP_H

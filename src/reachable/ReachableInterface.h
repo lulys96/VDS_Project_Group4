@@ -16,7 +16,7 @@ namespace ClassProject{
          * Constructor creates stateSize state bits for the user
          * @param stateSize state size
          */
-        explicit ReachableInterface(unsigned int stateSize): stateSize(stateSize) {}
+        explicit ReachableInterface(unsigned int stateSize) {}
         virtual ~ReachableInterface() = default;
 
          //! @return returns the XNOR of BDD IDs
@@ -61,8 +61,6 @@ namespace ClassProject{
          * @return
          */
         virtual bool is_reachable(const std::vector<bool>& stateVector) = 0;
-    private:
-        unsigned int stateSize;
     };
 }
 
