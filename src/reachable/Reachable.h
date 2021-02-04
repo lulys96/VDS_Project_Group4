@@ -60,8 +60,8 @@ class Reachable : public ReachableInterface {
     private:
         BDD_ID compute_transition_relation();
         BDD_ID compute_cs0();
-        BDD_ID compute_existential_quantification_S (BDD_ID node);
-        BDD_ID imgr_to_imgs(BDD_ID img_r);
+        BDD_ID compute_existential_quantification_S (const BDD_ID node);
+        BDD_ID imgr_to_imgs(const BDD_ID img_r);
 
         std::vector<BDD_ID> states;
         std::vector<BDD_ID> next_states;

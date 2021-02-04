@@ -199,11 +199,13 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
 BDD_ID Manager::createVar(const std::string &label)
 {
     for (auto& it : uni_table) {
-        if (it.label == label) return it.id;
+        if (it.label == label) 
+            if (isVariable(it.id)) return it.id;
+            else throw std::invalid_argument("Label belongs to BDD node that is not a variable");
     }
-    //TODO: check if is a var
+    
     TableEntry new_node = TableEntry();
-    new_node.label = label; //no label yet
+    new_node.label = label; 
     new_node.high = 1;
     new_node.low = 0;
     new_node.id = uniqueTableSize();

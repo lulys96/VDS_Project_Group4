@@ -61,6 +61,21 @@ void Reachable::setInitState(const std::vector<bool>& stateVector)
         throw std::out_of_range("setInitState: stateVector size isn't correct!!!");
 }
 
+
+bool Reachable::is_reachable(const std::vector<bool>& stateVector)
+{   
+    BDD_ID reachables = compute_reachable_states();
+    BDD_ID next_id = reachables;
+    for (int i=0; i<states.size(); i++) {
+        if(stateVector[i]) next_id = coFactorTrue(next_id,states[i]);
+        else               next_id = coFactorFalse(next_id,states[i]); 
+    }
+    if (next_id==False()) return false;
+    else if (next_id==True())  return true;
+    else std::cout << "deu ruim";
+    return false;
+}
+
 BDD_ID Reachable::compute_reachable_states()
 {
     BDD_ID tau = compute_transition_relation();
@@ -76,20 +91,6 @@ BDD_ID Reachable::compute_reachable_states()
     }
     while (c_R != c_Rit);
     return c_R;
-}
-
-bool Reachable::is_reachable(const std::vector<bool>& stateVector)
-{   
-    BDD_ID reachables = compute_reachable_states();
-    BDD_ID next_id = reachables;
-    for (int i=0; i<states.size(); i++) {
-        if(stateVector[i]) next_id = coFactorTrue(next_id,states[i]);
-        else               next_id = coFactorFalse(next_id,states[i]); 
-    }
-    if (next_id==False()) return false;
-    else if (next_id==True())  return true;
-    else std::cout << "deu ruim";
-    return false;
 }
 
 BDD_ID Reachable::compute_transition_relation()
@@ -115,7 +116,7 @@ BDD_ID Reachable::compute_cs0()
     return last_id;
 }
 
-BDD_ID Reachable::compute_existential_quantification_S(BDD_ID node)
+BDD_ID Reachable::compute_existential_quantification_S(const BDD_ID node)
 {
     BDD_ID exQuantS = or2(coFactorTrue(node,states[0]),
                           coFactorFalse(node,states[0])); //s0
@@ -126,7 +127,7 @@ BDD_ID Reachable::compute_existential_quantification_S(BDD_ID node)
     return exQuantS;
 }
 
-BDD_ID Reachable::imgr_to_imgs(BDD_ID img_r)
+BDD_ID Reachable::imgr_to_imgs(const BDD_ID img_r)
 {
     std::vector<BDD_ID> xnor_id; 
     xnor_id.resize(states.size());
