@@ -8,10 +8,12 @@ using namespace ClassProject;
 Reachable::Reachable(unsigned int stateSize) :
 ReachableInterface(stateSize)
 {
+    //Create a variable for each state bit and save ID in a vector
     for (int i=0; i<stateSize; i++) {
         std::string var_label = "s"+std::to_string(i);
         states.push_back(createVar(var_label)); 
     }
+    //Create a variable for each next state bit save ID in a vector
     for (int i=0; i<stateSize; i++) {
         std::string var_label = "next_s"+std::to_string(i);
         next_states.push_back(createVar(var_label)); 
@@ -19,7 +21,8 @@ ReachableInterface(stateSize)
 }
 
 const std::vector<BDD_ID> &Reachable::getStates() const
-{
+{   
+    //return vector with ID of each state bit
     return states;
 }
 
@@ -40,6 +43,7 @@ BDD_ID Reachable::xnor2(BDD_ID a, BDD_ID b)
 
 void Reachable::setDelta(const std::vector<BDD_ID> &transitionFunctions)
 {
+    // Save the BDD_ID of the transition function of each state bit in a vector
     if (transitionFunctions.size() == states.size()) {
         for (int i=0; i<states.size(); i++) {
             delta.push_back(transitionFunctions[i]); 
@@ -51,6 +55,7 @@ void Reachable::setDelta(const std::vector<BDD_ID> &transitionFunctions)
 
 void Reachable::setInitState(const std::vector<bool>& stateVector)
 {
+    //Save initial state 
     if (stateVector.size() == states.size()) {
        for (int i=0; i<states.size(); i++) {
            if (stateVector[i]) initState.push_back(states[i]); 
@@ -66,6 +71,8 @@ bool Reachable::is_reachable(const std::vector<bool>& stateVector)
 {   
     BDD_ID reachables = compute_reachable_states();
     BDD_ID next_id = reachables;
+    //For every state bit we select the cofactor true or false, from the result node
+    //we apply the same thing for the next state bit until we reach a terminal node.
     for (int i=0; i<states.size(); i++) {
         if(stateVector[i]) next_id = coFactorTrue(next_id,states[i]);
         else               next_id = coFactorFalse(next_id,states[i]); 
@@ -95,6 +102,7 @@ BDD_ID Reachable::compute_reachable_states()
 
 BDD_ID Reachable::compute_transition_relation()
 {
+    //Transition relation = (next_s0 XOR trans_F(0)) + (next_s1 XOR trans_F(1)) ...
     std::vector<BDD_ID> xnor_id; 
     xnor_id.resize(states.size());
     for (int i=0; i<states.size(); i++) {
@@ -109,6 +117,8 @@ BDD_ID Reachable::compute_transition_relation()
 
 BDD_ID Reachable::compute_cs0()
 {
+    //characteristic function of initial state 
+    //AND all initial state bits
     BDD_ID last_id = initState[0];
     for (int i=1; i<states.size(); i++) {
         last_id = and2(last_id,initState[i]);   
@@ -118,6 +128,7 @@ BDD_ID Reachable::compute_cs0()
 
 BDD_ID Reachable::compute_existential_quantification_S(const BDD_ID node)
 {
+    //Disjunction of cofactors of "node" with respect to state bits.
     BDD_ID exQuantS = or2(coFactorTrue(node,states[0]),
                           coFactorFalse(node,states[0])); //s0
     for (int i=1; i<states.size(); i++) {
