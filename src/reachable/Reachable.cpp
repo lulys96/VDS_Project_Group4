@@ -72,7 +72,7 @@ bool Reachable::is_reachable(const std::vector<bool>& stateVector)
     }
     if (next_id==False()) return false;
     else if (next_id==True())  return true;
-    else std::cout << "deu ruim";
+    else throw std::runtime_error("Result should be a terminal node");
     return false;
 }
 
