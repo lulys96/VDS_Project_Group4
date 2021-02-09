@@ -137,6 +137,7 @@ TEST(managerTest, non_circular_fsm) {
 
     comp.setInitState({false,false});
 
+    //false false -> true false
     ASSERT_FALSE(comp.is_reachable({true,true}));
     ASSERT_TRUE(comp.is_reachable({false,false}));
     ASSERT_TRUE(comp.is_reachable({true,false}));

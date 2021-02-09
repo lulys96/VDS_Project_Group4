@@ -80,7 +80,6 @@ bool Reachable::is_reachable(const std::vector<bool>& stateVector)
     if (next_id==False()) return false;
     else if (next_id==True())  return true;
     else throw std::runtime_error("Result should be a terminal node");
-    return false;
 }
 
 BDD_ID Reachable::compute_reachable_states()
@@ -102,7 +101,7 @@ BDD_ID Reachable::compute_reachable_states()
 
 BDD_ID Reachable::compute_transition_relation()
 {
-    //Transition relation = (next_s0 XOR trans_F(0)) + (next_s1 XOR trans_F(1)) ...
+    //Transition relation = (next_s0 XNOR trans_F(0)) and (next_s1 XNOR trans_F(1)) ...
     std::vector<BDD_ID> xnor_id; 
     xnor_id.resize(states.size());
     for (int i=0; i<states.size(); i++) {
@@ -118,7 +117,7 @@ BDD_ID Reachable::compute_transition_relation()
 BDD_ID Reachable::compute_cs0()
 {
     //characteristic function of initial state 
-    //AND all initial state bits
+    //AND all initial state bits  
     BDD_ID last_id = initState[0];
     for (int i=1; i<states.size(); i++) {
         last_id = and2(last_id,initState[i]);   

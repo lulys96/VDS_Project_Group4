@@ -37,7 +37,7 @@ class Manager : public ManagerInterface {
     const BDD_ID &True() override;
 
 /// &False()
-/** Checks the BDD_ID of the terminal noe false
+/** Checks the BDD_ID of the terminal node false
 *   \return returns the BDD_ID of the terminal node true
 ******************************************************************/
     const BDD_ID &False() override;
